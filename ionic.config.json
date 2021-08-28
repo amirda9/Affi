@@ -1,0 +1,7 @@
+{
+  "name": "affi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
