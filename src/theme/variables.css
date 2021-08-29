@@ -74,6 +74,15 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  --brand-primary: #383a5f;
+  --brand-secondary: #F7F7F7;
+  --brand-tertiary: #767676;
+
+
+  --ion-font-family: "san";
+
+  
 }
 
 @media (prefers-color-scheme: dark) {
@@ -233,4 +242,12 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-card-background: #1e1e1e;
   }
+}
+
+@font-face {
+  font-family: 'san';    
+  src:url('./../fonts/IRANSansWebFaNum.woff2') format('woff2'),
+      url('./../fonts/IRANSansWebFaNum.woff') format('woff'),
+      url('./../fonts/IRANSansWebFaNum.ttf') format('ttf'),
+      url('./../fonts/IRANSansWebFaNum.eot') format('eot');
 }
