@@ -1,46 +1,47 @@
 <template>
 	<div>
-		<ion-grid v-for="(item, index) in data" :key="index">
+		<ion-grid @click="show(item.node.id)" v-for="(item, index) in data" :key="index">
             <ion-card>
 			<ion-row class="first-row">
 				<div class="company">
-					{{ item.company }}
+					{{ item.node.name }}
 					<br />
 					<span class="model">
-						{{ item.model }}
+						{{ item.node.name }}
 					</span>
 				</div>
-				<img src="../images/digi.png" />
+				<img :src=item.node.image />
 			</ion-row>
 			<ion-row class="second-row">
 				<ion-col>
-					<div class="label">Leasing Rate</div>
+					<div class="label">امتیاز</div>
 					<div class="value">
-						{{ item.rate }}
+						{{item.node.rating}}
 						<span class="unit">
-							/month
+							/5
 						</span>
 					</div>
 				</ion-col>
 				<ion-col>
-					<div class="label">Leasing Term</div>
+					<div class="label">تعداد محصولات</div>
 					<div class="value">
-						{{ item.term }} 
-						<span class="unit">
+						89
+						<!-- <span class="unit">
 							months
-						</span>
+						</span> -->
 					</div>
 				</ion-col>
 				<ion-col>
-					<div class="label">AFF Rate</div>
+					<div class="label">سود مشارکت</div>
 					<div class="value">
-						{{ item.new }}
+						{{ item.node.rating }}
 					</div>
 				</ion-col>
 			</ion-row>
             </ion-card>
 		</ion-grid>
 	</div>
+	{{res}}
 </template>
 
 <script>
@@ -53,12 +54,18 @@ export default {
 			type: Array,
 			required: true,
 			default: () => []
-		}
+		},
+	},
+	methods:{
+		show(e){
+		console.log(e);
+	}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
+
 .company {
 	color: #ffffff;
 	font-weight: 500;
@@ -72,6 +79,7 @@ export default {
 }
 ion-card{
     border-radius: 20px;
+	// --background:var(--brand-tertiary);
 }
 ion-row {
 	img {
@@ -81,25 +89,28 @@ ion-row {
 	}
 	&.first-row {
 		border-radius: 20px 20px 0 0;
-		background: #ffffff;
+		// background: #ffffff;
 		margin: 0;
 		padding: 0;
 	}
 	&.second-row {
 		padding: 10px;
-		background: #ffffff;
+		// background: #ffffff;
 		border-radius: 0 0 20px 20px;
 	}
 	ion-col {
 		.label {
+			text-align: center;
 			margin-bottom: 10px;
 			font-weight: 500;
 			font-size: 13px;
+			color: var(--brand-quaternary);
 		}
 		.value {
 			font-weight: 500;
+			text-align: center;
 			font-size: 15px;
-			color: #96a6d2;
+			color: var(--brand-quaternary);
 		}
 		.unit {
 			font-size: 11px;

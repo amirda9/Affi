@@ -78,7 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 ion-tab-bar {
-  --background: #ffffff;
+  // --background:var(--brand-tertiary);
   height: 60px;
   ion-icon {
     font-size: 35px;
@@ -88,6 +88,9 @@ ion-tab-bar {
     font-weight: 500;
     font-size: 14px;
   }
+}
+ion-tab-button{
+  --color-selected: var(--brand-quaternary);
 }
 ion-fab-button {
  --background: var(--brand-primary);

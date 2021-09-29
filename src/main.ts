@@ -23,7 +23,55 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-const app = createApp(App)
+import { setContext } from 'apollo-link-context'
+import { provide, h } from 'vue'
+import { DefaultApolloClient } from '@vue/apollo-composable'
+import { ApolloClient, createHttpLink, InMemoryCache,ApolloLink } from '@apollo/client/core'
+
+const authLink = setContext(async (_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.token
+  // Return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      'Authorization': `JWT ${token}` || ''
+    }
+  }
+})
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  const token = localStorage.token
+  operation.setContext({
+    headers: {
+      'Authorization': token ? `JWT ${token}` : null
+    }
+  })
+
+  return forward(operation)
+})
+// HTTP connection to the API
+const httpLink = createHttpLink({
+  // You should use an absolute URL here
+  uri: 'http://37.152.180.217:8000/graphql/',
+})
+
+// Cache implementation
+const cache = new InMemoryCache()
+
+// Create the apollo client
+const apolloClient = new ApolloClient({
+  link: authMiddleware.concat(httpLink),
+  cache,
+})
+
+const app = createApp({
+  setup () {
+    provide(DefaultApolloClient, apolloClient)
+  },
+
+  render: () => h(App),
+})
   .use(IonicVue)
   .use(router);
   

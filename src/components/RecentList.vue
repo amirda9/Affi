@@ -40,7 +40,7 @@ h2 {
 	color: #000000;
 }
 ion-item {
-  --background: #e2e9ea;
+  --background: var(--brand-tertiary);
   --border-style: none;
 }
 ion-icon {

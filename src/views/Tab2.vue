@@ -36,7 +36,7 @@
 
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonRow,IonCol,IonFab,IonFabButton } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonRow,IonCol } from '@ionic/vue';
 import CardWallet from '@/components/CardWallet.vue';
 import QuickActions from '@/components/QuickActions.vue';
 import RecentList from '@/components/RecentList.vue';
@@ -44,7 +44,7 @@ import Bar from '@/components/Bar.vue';
 
 export default  {
   name: 'Tab2',
-  components: {CardWallet,QuickActions,IonHeader, IonToolbar, IonTitle, IonContent, IonPage , IonRow,IonCol,RecentList , IonFab,IonFabButton},
+  components: {CardWallet,QuickActions,IonHeader, IonToolbar, IonTitle, IonContent, IonPage , IonRow,IonCol,RecentList },
   data(){
     return{
       recentList: [
@@ -68,6 +68,6 @@ export default  {
 
 <style lang="scss" scoped>
 ion-toolbar{
-  --background:#383a5f;
+  --background:var(--brand-primary);
 }
 </style>

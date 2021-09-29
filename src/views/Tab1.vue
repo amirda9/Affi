@@ -30,25 +30,47 @@
       </ion-item>
     </ion-card-content>
   </ion-card> -->
-
-  <CardListing :data="cards"/>
+  <CardListing :data="res"/>
+  <!-- {{res}} -->
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonItem,IonCard,IonCardContent,IonIcon,IonImg,IonCardHeader,IonCardSubtitle,IonButton,IonCardTitle } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import { defineComponent } from '@vue/runtime-core';
 import { heart,share } from 'ionicons/icons';
 import CardListing from '@/components/CardListing.vue';
+import { useQuery, useResult } from '@vue/apollo-composable';
+import gql from 'graphql-tag'
 
 
 export default defineComponent( {
   name: 'Tab1',
-  components: { CardListing, IonHeader, IonToolbar, IonTitle, IonContent, IonPage,IonItem,IonCard,IonCardContent,IonIcon,IonImg,IonCardHeader,IonCardSubtitle,IonButton,IonCardTitle },
+  components: { CardListing, IonHeader, IonToolbar, IonTitle, IonContent, IonPage},
   setup(){
+
+     const { result,loading, error,variables } = useQuery(gql`
+      query shops {
+  allShop {
+    edges {
+      node {
+        id
+        rating
+        name
+      }
+    }
+  }
+}
+
+    `
+)
+
+    const res = useResult(result, null, data => data.allShop.edges)
+    // console.log(res)
+
     return{
-      heart,share
+      heart,share,res,result
     }
   },
    data(){
@@ -94,6 +116,10 @@ ion-header {
 }
 
 ion-toolbar{
-  --background:#383a5f;
+  --background:var(--brand-primary);
+}
+
+ion-content{
+  --background:#ffffff;
 }
 </style>

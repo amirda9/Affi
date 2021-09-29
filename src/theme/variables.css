@@ -75,12 +75,19 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  --brand-primary: #383a5f;
-  --brand-secondary: #F7F7F7;
-  --brand-tertiary: #767676;
+  --brand-primary: #464775;
+  --brand-secondary: #ee8164;
+  --brand-tertiary: #dbe1f1;
+  --brand-quaternary: #676ab0;
+  --brand-quinary: #fca2ca;
 
 
   --ion-font-family: "san";
+
+
+  /* --ion-background-color: #0f0f17 !important;
+  --background: #0f0f17 !important;
+  --padding-bottom: 130px !important; */
 
   
 }

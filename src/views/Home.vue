@@ -90,7 +90,6 @@
           >
             <ion-input
             v-model="pass"
-            v-on:keyup.enter="onEnter()"
               placeholder="Password"
               type="password"
               clearInput="true"
@@ -138,7 +137,7 @@ import gql from 'graphql-tag'
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  name: "Login",
+  name: "Home",
   components: {
     IonPage,
     IonText,
@@ -154,7 +153,7 @@ export default defineComponent({
     const router = useRouter();
     const { mutate: auth,onDone } = useMutation(gql`
       mutation auth ($user: String!,$pass:String!) {
-        tokenAuth (phoneNumber: $user , password:$pass) {
+        tokenAuth (username: $user , password:$pass) {
           token
           user{
             id
@@ -164,8 +163,7 @@ export default defineComponent({
     `)
 
  onDone(result=>{
-
-        console.log(result.data.tokenAuth)
+        console.log(result.data.tokenAuth.token)
         localStorage.token = result.data.tokenAuth.token;
         localStorage.id = result.data.tokenAuth.user.id;
         router.push({ path: '/tabs' })       
@@ -186,10 +184,7 @@ export default defineComponent({
   methods:{
     Login(){
       // console.log(this.user,this.pass)
-      this.auth({user:this.user,pass:this.pass});
-    },
-    onEnter(){
-     this.auth({user:this.user,pass:this.pass});
+      this.auth({user:this.user,pass:this.pass})
     }
   }
 });

@@ -51,8 +51,8 @@ export default {
 
 <style scoped>
 .card {
-	background-color: #1fc8db;
-  background-image: linear-gradient(141deg, #383a3e 0%, #383a5f 51%, #383a48 75%);
+	/* background-color: #1fc8db; */
+  background-image: linear-gradient(141deg, var(--brand-quaternary) 0%, var(--brand-primary)  51%, var(--brand-quaternary)  75%);
 	border-radius: 25px;
   height: 170px;
 	margin: 0 3px;
