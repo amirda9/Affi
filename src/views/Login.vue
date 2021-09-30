@@ -152,7 +152,9 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const { mutate: auth,onDone } = useMutation(gql`
+    const user = ref('')
+    const pass = ref('')
+    const { mutate: auth,onDone,onError } = useMutation(gql`
       mutation auth ($user: String!,$pass:String!) {
         tokenAuth (phoneNumber: $user , password:$pass) {
           token
@@ -169,9 +171,12 @@ export default defineComponent({
         localStorage.token = result.data.tokenAuth.token;
         localStorage.id = result.data.tokenAuth.user.id;
         router.push({ path: '/tabs' })       
-    })
-    const user = ref('')
-    const pass = ref('')
+    });
+
+  onError(()=>{
+    alert("Enter a valid Creditentials.");
+  })
+    
     return {
       ellipse,
       square,
@@ -187,9 +192,13 @@ export default defineComponent({
     Login(){
       // console.log(this.user,this.pass)
       this.auth({user:this.user,pass:this.pass});
+      this.user = "";
+      this.pass = "";
     },
     onEnter(){
      this.auth({user:this.user,pass:this.pass});
+     this.user = "";
+     this.pass = "";
     }
   }
 });

@@ -1,41 +1,133 @@
 <template>
   <ion-page>
-      <ion-grid>
-    <ion-row id="list">
-      <ion-col v-for="(item, index) in btns" :key="index" @click="select(index)" :class="active === index ? 'active' : null">
-        {{ item }}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-header style="padding:0; margin-bottom:0;">
+      <ion-toolbar>
+        <ion-title style="color:white; text-align:center;">{{
+          name
+        }}</ion-title>
+        <ion-buttons slot="start">
+          <ion-button @click="back">
+            <ion-icon
+              style="color:white;"
+              :icon="arrowBack"
+              class="back"
+            ></ion-icon>
+          </ion-button>
+          <!-- <ion-back-button></ion-back-button> -->
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-grid>
+      <ion-row id="list">
+        <ion-col
+          v-for="(item, index) in btns"
+          :key="index"
+          @click="select(index)"
+          :class="active === index ? 'active' : null"
+        >
+          {{ item }}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <!-- <product-lis -->
+        <ProductList :data="products" />
+      </ion-row>
+    </ion-grid>
   </ion-page>
 </template>
 
-
 <script>
-import { defineComponent,ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import {
- IonGrid, IonRow, IonCol
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonPage,
+  IonToolbar,
+  IonTitle,
+  IonIcon,
+  IonButtons,
+  IonHeader,
+  IonButton,
 } from "@ionic/vue";
+import { arrowBack } from "ionicons/icons";
+import ProductList from "@/components/ProductList.vue";
+import { useRouter } from "vue-router";
+import gql from "graphql-tag";
+import { useQuery, useResult } from "@vue/apollo-composable";
 
 export default defineComponent({
-    name: "Shop",
-    
-  components: { IonGrid, IonRow, IonCol },
+  name: "Shop",
+  setup() {
+    const { result, variables } = useQuery(
+      gql`
+        query shop($id: Int!) {
+          shop(id: $id) {
+            name
+            id
+            rating
+            shopImage {
+              src
+            }
+            products {
+              edges {
+                node {
+                  id
+                  name
+                  averageRating
+                  price
+                }
+              }
+            }
+          }
+        }
+      `,
+      {
+        id: 1,
+      }
+    );
+
+    const name = useResult(result, null, (data) => data.shop.name);
+    const products = useResult(result, null, (data) => data.shop.products.edges);
+
+    return {
+      result,
+      arrowBack,
+      name,
+      products
+    };
+  },
+
+  components: {
+    ProductList,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonPage,
+    IonToolbar,
+    IonTitle,
+    IonIcon,
+    IonButtons,
+    IonHeader,
+    IonButton,
+  },
   data() {
     return {
       active: null,
-      btns: ["Category 1 ", "Food", "Clothes"]
-    }
+      btns: ["Category 1 ", "Food", "Clothes"],
+    };
   },
-	methods: {
-		pay() {
-			this.$router.push("pay");
+
+  methods: {
+    back() {
+      // console.log("1");
+      this.$router.go(-1);
     },
     select(index) {
-      this.active = index;
-    }
-	}
-})
+      // this.active = index;
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -78,7 +170,7 @@ ion-col {
   font-size: 28px;
 }
 .price {
-  background: #312F3E;
+  background: #312f3e;
   width: fit-content;
   padding: 20px 7px;
   border-radius: 15px;
@@ -96,5 +188,9 @@ ion-col {
 }
 .date {
   color: #838688;
+}
+
+ion-toolbar {
+  --background: var(--brand-primary);
 }
 </style>

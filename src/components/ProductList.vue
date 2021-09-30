@@ -1,42 +1,41 @@
 <template>
 	<div>
-		<ion-grid @click="show(item.node.id)" v-for="(item, index) in data" :key="index">
+        <!-- {{data}} -->
+		<ion-grid  v-for="(item, index) in data" :key="index">
             <ion-card>
 			<ion-row class="first-row">
 				<div class="company">
-					{{ item.node.name }}
+					{{ item }}
 					<br />
 					<span class="model">
-						{{ item.node.name }}
+						{{ item }}
 					</span>
 				</div>
-				<img v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopImage[0].src" />
-				<!-- {{item.node.shopImage.src}} -->
+				<!-- <img v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopImage[0].src" /> -->
 
 			</ion-row>
 			<ion-row class="second-row">
 				<ion-col>
 					<div class="label">امتیاز</div>
 					<div class="value">
-						{{item.node.rating}}
+						{{item.node.averageRating}}
 						<span class="unit">
 							/5
 						</span>
 					</div>
 				</ion-col>
 				<ion-col>
-					<div class="label">تعداد محصولات</div>
+					<div class="label">قیمت</div>
 					<div class="value">
-						89
-						<!-- <span class="unit">
-							months
-						</span> -->
+						{{item.node.price}}
 					</div>
 				</ion-col>
 				<ion-col>
-					<div class="label">سود مشارکت</div>
+					<div class="label"></div>
 					<div class="value">
-						{{ item.node.rating }}
+						<ion-button @click="show(item.node.id)">
+                            بیشتر
+                        </ion-button>
 					</div>
 				</ion-col>
 			</ion-row>
@@ -49,7 +48,7 @@
 import { IonGrid, IonRow, IonCol , IonCard } from "@ionic/vue";
 import { useRouter } from 'vue-router';
 export default {
-	name: "card-wallet",
+	name: "product-list",
 	components: { IonGrid, IonRow, IonCol , IonCard },
 	setup(){
 		const router = useRouter();
@@ -76,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 
 .company {
-	color: #5a4d4d;
+	color: #ffffff;
 	font-weight: 500;
 	margin: 0 0 -64px 0;
 	padding: 15px;
