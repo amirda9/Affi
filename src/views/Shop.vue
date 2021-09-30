@@ -1,5 +1,6 @@
 <template>
-  <ion-page>
+  <ion-page scrollable>
+    <ion-content>
     <ion-header style="padding:0; margin-bottom:0;">
       <ion-toolbar>
         <ion-title style="color:white; text-align:center;">{{
@@ -33,6 +34,7 @@
         <ProductList :data="products" />
       </ion-row>
     </ion-grid>
+    </ion-content>
   </ion-page>
 </template>
 
@@ -49,6 +51,7 @@ import {
   IonButtons,
   IonHeader,
   IonButton,
+  IonContent
 } from "@ionic/vue";
 import { arrowBack } from "ionicons/icons";
 import ProductList from "@/components/ProductList.vue";
@@ -76,6 +79,10 @@ export default defineComponent({
                   name
                   averageRating
                   price
+                  stockQuantity
+                  images{
+                    src
+                  }
                 }
               }
             }
@@ -110,6 +117,7 @@ export default defineComponent({
     IonButtons,
     IonHeader,
     IonButton,
+    IonContent
   },
   data() {
     return {

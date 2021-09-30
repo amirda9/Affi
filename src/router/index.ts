@@ -4,6 +4,9 @@ import Tabs from '../views/Tabs.vue'
 import Login from '../views/Login.vue'
 import Product from '../views/Product.vue'
 import Shop from '../views/Shop.vue'
+import ForgetPass from '../views/ForgetPass.vue'
+import Verification from '../views/Verification.vue'
+import Register from '../views/Register.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,12 +18,24 @@ const routes: Array<RouteRecordRaw> = [
     component: Login,
   },
   {
+    path: '/verification',
+    component: Verification,
+  },
+  {
+    path: '/register',
+    component: Register,
+  },
+  {
     path: '/shop/:id',
     component: Shop,
   },
   {
-    path: '/product',
+    path: '/product/:id',
     component: Product,
+  },
+  {
+    path: '/forgetPass',
+    component: ForgetPass,
   },
   {
     path: '/tabs/',

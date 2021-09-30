@@ -5,14 +5,14 @@
             <ion-card>
 			<ion-row class="first-row">
 				<div class="company">
-					{{ item }}
+					{{ item.node.name }}
 					<br />
 					<span class="model">
-						{{ item }}
+						{{ item.node.name }}
 					</span>
 				</div>
 				<!-- <img v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopImage[0].src" /> -->
-
+<img src="https://dkstatics-public.digikala.com/digikala-products/113542037.jpg?x-oss-process=image/resize,h_1600/quality,q_80">
 			</ion-row>
 			<ion-row class="second-row">
 				<ion-col>
@@ -27,15 +27,15 @@
 				<ion-col>
 					<div class="label">قیمت</div>
 					<div class="value">
-						{{item.node.price}}
+						{{item.node.price.toLocaleString()}}
 					</div>
 				</ion-col>
 				<ion-col>
-					<div class="label"></div>
+					<div class="label">مشخصات</div>
 					<div class="value">
-						<ion-button @click="show(item.node.id)">
-                            بیشتر
-                        </ion-button>
+						<!-- <ion-button @click="openModal()" fill="clear" > -->
+			<ion-icon :icon="chevronUpOutline" @click="openModal(item.node)" style="color: var(--brand-primary);"></ion-icon>
+		<!-- </ion-button> -->
 					</div>
 				</ion-col>
 			</ion-row>
@@ -45,15 +45,18 @@
 </template>
 
 <script>
-import { IonGrid, IonRow, IonCol , IonCard } from "@ionic/vue";
+import { IonGrid, IonRow, IonCol , IonCard , modalController , IonIcon } from "@ionic/vue";
+import { chevronUpOutline } from "ionicons/icons";
 import { useRouter } from 'vue-router';
+import Modal from "./Modal";
 export default {
 	name: "product-list",
-	components: { IonGrid, IonRow, IonCol , IonCard },
+	components: { IonGrid, IonRow, IonCol , IonCard , IonIcon },
 	setup(){
 		const router = useRouter();
 		return{
-			router
+			router,
+            chevronUpOutline
 		}
 	},
   props: {
@@ -65,9 +68,25 @@ export default {
 	},
 	methods:{
 		show(e){
-			this.router.push({ path: '/shop/'+e})  
+			this.router.push({ path: '/product/'+e})  
 		// console.log(this.data[0].node.shopImage[0].src);
-	}
+	},
+    async openModal(e) {
+      this.$emit("toggleImageFn", true);
+      const modalInstance = modalController;
+      const modal = await modalInstance
+        .create({
+          component: Modal,
+          cssClass: "custom-modal-class",
+          componentProps: {
+              data:e,
+            context: this,
+            modalInstance,
+          },
+        })
+
+      return modal.present();
+    }
 	}
 }
 </script>
@@ -75,7 +94,7 @@ export default {
 <style lang="scss" scoped>
 
 .company {
-	color: #ffffff;
+	color: #5a4d4d;
 	font-weight: 500;
 	margin: 0 0 -64px 0;
 	padding: 15px;

@@ -6,11 +6,11 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+      <!-- <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title style="text-align:center; color:white;" size="large">کیف پول</ion-title>
         </ion-toolbar>
-      </ion-header>
+      </ion-header> -->
       <ion-row class="ion-padding-top ion-padding-horizontal">
         <ion-col>
           <CardWallet/>

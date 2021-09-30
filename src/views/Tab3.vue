@@ -6,12 +6,12 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+      <!-- <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title style="text-align:center; color:white;"
            size="large">پروفایل</ion-title>
         </ion-toolbar>
-      </ion-header>
+      </ion-header> -->
 <div class="muck-up">
   <div class="overlay"></div>
   <div class="top"  style="background-color:var(--brand-primary)">
