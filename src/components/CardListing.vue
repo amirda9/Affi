@@ -10,7 +10,7 @@
 						{{ item.node.name }}
 					</span>
 				</div>
-				<img v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopImage[0].src" />
+				<img v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopPic" />
 				<!-- {{item.node.shopImage.src}} -->
 
 			</ion-row>
@@ -36,7 +36,7 @@
 				<ion-col>
 					<div class="label">سود مشارکت</div>
 					<div class="value">
-						{{ item.node.rating }}
+						{{ item.node.shopRating }}
 					</div>
 				</ion-col>
 			</ion-row>

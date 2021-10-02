@@ -56,11 +56,9 @@ export default defineComponent( {
     edges {
       node {
         id
-        rating
+        shopRate
         name
-        shopImage{
-          src
-        }
+        shopPic
       }
     }
   }
