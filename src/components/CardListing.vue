@@ -76,11 +76,12 @@ export default {
 <style lang="scss" scoped>
 
 .company {
-	color: #5a4d4d;
+	color: #ffffff;
 	font-weight: 500;
 	margin: 0 0 -64px 0;
 	padding: 15px;
 	z-index: 9999999999999;
+	background-color: var(--brand-primary);
 }
 .model {
 	font-size: 13px;

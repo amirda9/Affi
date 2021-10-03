@@ -98,6 +98,7 @@
           </ion-item>
         </div>
       </div>
+      
 
       <div class="circle circle2"></div>
 
@@ -106,12 +107,14 @@
           >Login</ion-button
         >
         <ion-text style="color:var(--brand-tertiary)" @click="forget()"><p>Forgot Password?</p></ion-text>
+        <ion-text style="color:var(--brand-tertiary)" @click="forget()"><p>Register</p></ion-text>
+        
         <ion-row>
           <ion-col size="3"
-            ><ion-icon name="logo-facebook" color="primary"></ion-icon
+            ><ion-icon name="ellipse" color="light"></ion-icon
           ></ion-col>
           <ion-col size="3"
-            ><ion-icon name="logo-google" color="danger"></ion-icon
+            ><ion-icon name="logoGoogle" color="light"></ion-icon
           ></ion-col>
         </ion-row>
       </div>
@@ -131,7 +134,7 @@ import {
   IonCol,
   IonIcon,
 } from "@ionic/vue";
-import { ellipse, square, triangle, person } from "ionicons/icons";
+import { ellipse, square, triangle, person,logoGoogle } from "ionicons/icons";
 import { defineComponent,ref } from "vue";
 import { useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
@@ -185,7 +188,8 @@ export default defineComponent({
       user,
       pass,
       auth,
-      router
+      router,
+      logoGoogle
     };
   },
   methods:{
@@ -269,6 +273,7 @@ ion-content {
 ion-icon {
   font-size: 5rem;
   margin-left: 25vw;
+  color: white;
 }
 
 .align {

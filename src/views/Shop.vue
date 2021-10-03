@@ -68,10 +68,8 @@ export default defineComponent({
           shop(id: $id) {
             name
             id
-            rating
-            shopImage {
-              src
-            }
+            shopRate
+            shopPic
             products {
               edges {
                 node {
