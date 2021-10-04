@@ -56,6 +56,7 @@ export default defineComponent( {
     edges {
       node {
         id
+        url
         shopRate
         name
         shopPic

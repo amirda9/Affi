@@ -24,12 +24,12 @@
                     <div class="details">
                         <!-- <h1 class="ion-padding-top">AFFI</h1> -->
                         <div v-if="status==1"> 
-                        <p>
+                        <!-- <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing 
                             elit. Integer lacinia dui lectus. Donec scelerisque ipsum
                             diam, ac mattis orci pellentesque eget. 
                         </p>
-                        <button>Check Now</button>
+                        <button>Check Now</button> -->
                         </div>
 
                         <div v-if="status==2"> 
@@ -114,7 +114,7 @@
                 </div>
                                 
             </div>
-<ion-row style="padding-top:3em;">
+<!-- <ion-row style="padding-top:3em;">
             <svg xmlns="http://www.w3.org/2000/svg" class="prev" width="56.898" height="91" viewBox="0 0 56.898 91"><path d="M45.5,0,91,56.9,48.452,24.068,0,56.9Z" transform="translate(0 91) rotate(-90)" fill="#fff"/></svg>
             <svg xmlns="http://www.w3.org/2000/svg" class="next" width="56.898" height="91" viewBox="0 0 56.898 91"><path d="M45.5,0,91,56.9,48.452,24.068,0,56.9Z" transform="translate(56.898) rotate(90)" fill="#fff"/></svg>
             <div class="trail">
@@ -124,14 +124,8 @@
                     <div class="box4" @click="state(4)">4</div>
                     <div class="box5" @click="state(5)">5</div>
             </div>
-</ion-row>
+</ion-row> -->
         </div>   
-        <!-- <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
-        <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/CSSRulePlugin3.min.js"></script> -->
-        
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.2/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.2/CSSRulePlugin.min.js"></script> -->
-    <!-- </body> -->
   </ion-content>
 </ion-page>
 </template>
@@ -161,7 +155,6 @@ export default defineComponent({
 
   },
   setup() {
-    const status = 2;
     const router = useRouter();
     const { mutate: auth, onDone } = useMutation(gql`
       mutation auth($user: String!, $pass: String!) {
@@ -207,9 +200,6 @@ export default defineComponent({
       // console.log(this.user,this.pass)
       this.auth({ user: this.user, pass: this.pass });
     },
-    state(e: number){
-        this.status=e;
-    }
   },
 });
 </script>

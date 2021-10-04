@@ -7,7 +7,7 @@
 					{{ item.node.name }}
 					<br />
 					<span class="model">
-						{{ item.node.name }}
+						{{ item.node.url }}
 					</span>
 				</div>
 				<img v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopPic" />

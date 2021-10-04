@@ -6,86 +6,58 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <!-- <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title style="text-align:center; color:white;"
-           size="large">پروفایل</ion-title>
-        </ion-toolbar>
-      </ion-header> -->
-<div class="muck-up">
-  <div class="overlay"></div>
-  <div class="top"  style="background-color:var(--brand-primary)">
-    
-    
-  </div>
-
-
-  <div class="bottom">
-    <div class="title">
-      <h3>My Tasks</h3>
-      <small>February 8,2015</small>
+      <div class="intro">
+  <div class="black"></div>  
+  <div class="white"></div>
+  <div class="boxfather">
+    <div class="box">
+      <h1>WELCOME</h1>
+      <button>Enter</button>
     </div>
-    <!-- <ul class="tasks">
-      <li class="one red">
-        <span class="task-title">Make New Icon</span>
-        <span class="task-time">5pm</span>
-        <span class="task-cat">Web App</span>
-
-      </li>
-      <li class="one red">
-        <span class="task-title">Catch up with Brian</span>
-        <span class="task-time">3pm</span>
-        <span class="task-cat">Mobile Project</span>
-
-      </li>
-      <li class="two green">
-        <span class="task-title">Design Explorations</span>
-        <span class="task-time">2pm</span>
-        <span class="task-cat">Company Web site</span>
-
-      </li>
-      </li>
-      <li class="tow green hang">
-        <span class="task-title">Team Meeting</span>
-        <span class="task-time">2pm</span>
-        <span class="task-cat">Hangouts</span>
-        <img src="https://raw.githubusercontent.com/arjunamgain/FilterMenu/master/images/2.jpg">
-        <img src="https://raw.githubusercontent.com/arjunamgain/FilterMenu/master/images/3.jpg">
-        <img src="https://raw.githubusercontent.com/arjunamgain/FilterMenu/master/images/profile.jpg">
-      </li>
-      <li class="three yellow">
-        <span class="task-title">New Projects</span>
-        <span class="task-time">2pm</span>
-        <span class="task-cat">Starting</span>
-
-
-      </li>
-
-      <li class="three yellow">
-        <span class="task-title">Lunch with Mary</span>
-        <span class="task-time">2pm</span>
-        <span class="task-cat">Grill House</span>
-      </li>
-      <li class="three yellow">
-        <span class="task-title">Team Meeting</span>
-        <span class="task-time">2pm</span>
-        <span class="task-cat">Hangouts</span>
-      </li>
-
-    </ul> -->
   </div>
+  
 </div>
-    
+
+
+
+<div class="homepage">
+  <h1>The Great White</h1>
+  <p>Messenger bag kickstarter chia swag craft beer irony art party pinterest cardigan, skateboard ethical. Pitchfork tilde seitan, crucifix asymmetrical flexitarian church-key mustache shoreditch occupy polaroid next level microdosing kickstarter. Kitsch lumbersexual tacos small batch, VHS hoodie taxidermy four loko keytar craft beer listicle narwhal four dollar toast authentic. Tofu pour-over truffaut tumblr before they sold out. Kale chips polaroid beard, ugh williamsburg fixie gluten-free quinoa fap bitters flexitarian. Meh master cleanse plaid 90's hammock, schlitz brunch quinoa kombucha intelligentsia aesthetic blog. Wolf austin readymade, literally freegan bitters pour-over cliche hella migas chambray tacos PBR&B. <br /> <br />
+
+Ramps wolf cronut retro. Farm-to-table actually slow-carb 3 wolf moon blog godard, taxidermy knausgaard asymmetrical gastropub narwhal quinoa. Deep v raw denim tousled flexitarian, celiac letterpress hammock beard put a bird on it lo-fi marfa. Poutine microdosing cold-pressed keytar retro, intelligentsia portland DIY craft beer pug seitan. Mumblecore readymade listicle fap, retro waistcoat meggings church-key craft beer chambray narwhal VHS. Messenger bag direct trade venmo hoodie blue bottle. Craft beer drinking vinegar meditation heirloom pork belly.  <br /> <br />
+   Cronut scenester fixie helvetica, deep v beard pabst godard. Meditation beard swag yr, hella cardigan flexitarian master cleanse irony bitters godard banjo. Organic banh mi chartreuse, kombucha shoreditch iPhone fanny pack. Irony seitan direct trade authentic four loko butcher poutine gluten-free, tumblr polaroid bespoke DIY. Before they sold out drinking vinegar hoodie, helvetica humblebrag tumblr lumbersexual yuccie keytar yr sriracha VHS synth retro. Narwhal sustainable marfa tilde godard. Retro shabby chic etsy austin skateboard.</p>
+ 
+</div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import { onMounted } from 'vue-demi';
+import jQuery from "jquery";
 
 export default  {
   name: 'Tab3',
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
+  setup(){
+onMounted(()=>{
+  const $ = jQuery;
+  $(function(){
+  $('.homepage').hide();
+  // $('.box').delay(500).effect("bounce", { times: 8 }, 800);
+  $('.box').hide().slideDown(500);
+  
+  
+  $('button').click(function(){
+    $('.intro').slideUp(400);
+     $('.box').slideUp(200);
+    $('.homepage').delay(500).slideDown(300);
+  });
+  
+});
+})
+  }
 }
 </script>
 
@@ -94,192 +66,93 @@ ion-toolbar{
   --background:var(--brand-primary);
 }
 
-*,
-:after,
-:before {
-  box-sizing: border-box
-}
+@import url(https://fonts.googleapis.com/css?family=Oxygen:400,300);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
 
-.clearfix:after,
-.clearfix:before {
-  content: '';
-  display: table
+*{
+  margin: 0;
+  padding: 0;
 }
-
-.clearfix:after {
-  clear: both;
-  display: block
+.intro{
+  margin: auto;
 }
-
-.muck-up {
-  // width: 310px;
-  // height: 545px;
-  // margin: 5em auto;
-  position: relative;
-  overflow: hidden;
-}
-
-.overlay {
-  // background: url(https://raw.githubusercontent.com/arjunamgain/FilterMenu/master/images/header.jpg) no-repeat top /contain;
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.overlay:after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(71, 32, 84, 0.5);
-}
-
-.muck-up > .top {
-  position: relative;
-  min-height: 240px;
-  padding: 15px;
-  color: #fff;
-  --background:#383a5f;
-}
-
-.top .nav span {
-  --background:var(--brand-primary);;
+.black {
+  width: 50%;
   float: left;
-  display: block;
+  background: #283644;
+  height: 100vh;
 }
 
-.nav p {
-  margin-top: 2px;
-  display: inline-block;
-  float: left;
-  vertical-align: bottom;
-}
-
-.ion-android-menu {
-  font-size: 24px;
-  margin-right: 17px;
-}
-
-.nav .ion-ios-more-outline {
-  font-size: 38px;
-  float: right !important;
-}
-
-.user-profile {
-  margin-top: 90px;
-}
-
-
-
-
-.muck-up .bottom {
-  background-color: #fff;
-  min-height: 303px;
-  z-index: 1;
-  padding: 35px;
-  position: relative;
-  color: #222;
-  padding-top: 0px;
-}
-
-.bottom:after {
-  content: '';
-  position: absolute;
-  top: -250px;
-  background: #fff;
-  left: 0px;
-  right: 0;
-  height: 600px;
-  transform: rotate(-45deg);
-  width: 200%;
-  // width: 337px;
-  z-index: -1;
-}
-
-.bottom .title {
-  margin-bottom: 20px;
-}
-
-.bottom .title h3 {
-  font-size: 22px;
-  margin-bottom: 5px;
-}
-
-.title small {
-  font-size: 10px;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-ul.tasks .task-title {
-  font-size: 13px;
-  display: inline-block;
-}
-
-ul.tasks .task-time {
+.white{
+  width: 50%;
   float: right;
-  font-size: 10px;
-  color: #888;
+  background: #4D727E;
+  height: 100vh;
 }
 
-ul.tasks .task-cat {
-  font-size: 10px;
-  display: block;
-  color: #888;
+.box{
+  height: 300px;
+  width: 500px;
+  background: #069A8E;
+  position:absolute;
+  top:150px;
+  left:0;
+  right:0;
+  margin:auto;
+  border-radius:20px;
 }
 
-ul.tasks li {
-  margin-bottom: 16px;
+.boxfather{
+  width:100%;
+  position:absolute;
+}
+.box h1{
+  color: #E4E4E4;
+  font-size: 5em;
+  text-align: center;
   position: relative;
-  z-index: 8;
+  top:70px;
+  font-family: 'Montserrat', sans-serif;
 }
 
-ul.tasks li:after {
-  content: '';
-  position: absolute;
-  left: -18px;
-  top: 8px;
-  height: 8px;
-  width: 8px;
-  border-radius: 50%;
+.box button{
+  left:43%;
+  position:relative;
+  top:120px;
+  padding: 8px 20px;
+  cursor:pointer;
+  border:0;
+  outline:none;
+  color:#525252;
+  background:#E4E4E4;
+  transition:all .3s ease;
+  font-size: 19px;
+  font-family: montserrat;
+  border-radius:5px;
+}
+.homepage{
+  height: 100vh;
+  position:relative;
+  top:40px;
+  
+ 
+}
+.homepage p{
+  width: 80%;
+  line-height: 1.5;
+  margin:50px auto;
+  font-family: oxygen;
+  font-size: 18px;
+  color: #585858;
+}
+.homepage h1{
+  padding-top: 50px;
+  width: 80%;
+  margin:auto;
+  font-family: montserrat;
+  color: #525252;
+  font-size: 40px;
 }
 
-ul.tasks li.red:after {
-  background: #FF3163;
-}
 
-ul.tasks li.green:after {
-  background: #54D6C7;
-}
-
-ul.tasks li.yellow:after {
-  background: #EAB429;
-}
-
-ul.tasks::after {
-  content: '';
-  position: absolute;
-  height: 400px;
-  width: 1px;
-  background: #eee;
-  left: 20px;
-  top: -68px;
-}
-
-ul li.hang {
-  margin-bottom: 48px;
-}
-
-ul li.hang img {
-  float: left;
-  height: 20ox;
-  width: 20px;
-  border-radius: 50%;
-  margin-right: 8px;
-}
 </style>
