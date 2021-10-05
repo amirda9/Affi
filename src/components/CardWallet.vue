@@ -12,12 +12,14 @@
 				</ion-row>
 				<ion-row>
 					<ion-col class="ion-text-center card-number">
-						6037 9974 6659 5908
+						{{data.bankAccountNumber}}
+						<!-- {{num}} -->
 					</ion-col>
 				</ion-row>
 				<ion-row>
 					<ion-col class="balance">
-						{{ num.toLocaleString() }} ریال
+						
+						{{data.amount.toLocaleString()}} ریال
 					</ion-col>
                     <ion-col class="ion-text-right expDate">
 						02/05 
@@ -30,22 +32,27 @@
 
 <script>
 import { IonSlides, IonSlide, IonGrid, IonRow, IonCol, IonIcon } from "@ionic/vue";
+import { data } from 'jquery';
 export default {
 	name: "card-wallet",
 	components: { IonSlides, IonSlide, IonGrid, IonRow, IonCol },
 	data(){
 		return{
-			num:100000
+			numString : 1000
 		}	
 	},
   props: {
 		data: {
-			type: Array,
+			type: Object,
 			required: false,
-			default: () => []
 		}
-		
 	},
+	setup(){
+		const num = data.bankAccountNumber;
+		return{
+			num
+		}
+	}
 }
 </script>
 

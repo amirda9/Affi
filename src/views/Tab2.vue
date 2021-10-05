@@ -13,7 +13,7 @@
       </ion-header> -->
       <ion-row class="ion-padding-top ion-padding-horizontal">
         <ion-col>
-          <CardWallet/>
+          <CardWallet :data="res" />
         </ion-col>
       </ion-row>
       <ion-row ion-padding-horizontal>
@@ -41,10 +41,34 @@ import CardWallet from '@/components/CardWallet.vue';
 import QuickActions from '@/components/QuickActions.vue';
 import RecentList from '@/components/RecentList.vue';
 import Bar from '@/components/Bar.vue';
+import { useQuery, useResult } from '@vue/apollo-composable';
+import gql from "graphql-tag";
 
 export default  {
   name: 'Tab2',
   components: {CardWallet,QuickActions,IonHeader, IonToolbar, IonTitle, IonContent, IonPage , IonRow,IonCol,RecentList },
+  setup(){
+const { result,loading, error,variables } = useQuery(gql`
+    query wallet($id:Int!){
+  wallet(userId:$id){
+    amount
+    bankName
+    bankAccountNumber
+  }
+}
+
+    `,{
+      id:1
+    }
+)
+
+    const res = useResult(result, null, data => data.wallet)
+
+    return{
+      res,
+      result
+    }
+  },
   data(){
     return{
       recentList: [
