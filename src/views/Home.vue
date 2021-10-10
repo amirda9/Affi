@@ -52,7 +52,7 @@
                       @click="shop"
                       style="color:var(--brand-tertiary); --background:var(--brand-quaternary); width:40vw;"
                     >
-                      Register as Shop
+                      ثبت نام فروشگاه
                     </ion-button>
                   </ion-col>
                 </ion-row>
@@ -62,7 +62,7 @@
                       @click="affi"
                       style="color:var(--brand-tertiary); --background:var(--brand-quaternary); width:40vw;"
                     >
-                      Register as Affi
+                      ثبت نام افی
                     </ion-button>
                   </ion-col>
                 </ion-row>
@@ -72,7 +72,7 @@
                       @click="login()"
                       style="color:var(--brand-quaternary); --background:var(--brand-tertiary); width:40vw;"
                     >
-                      Login
+                      ورود
                     </ion-button>
                   </ion-col>
                 </ion-row>

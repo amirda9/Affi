@@ -64,21 +64,24 @@
 </ion-content> -->
 
     <ion-content>
+        <div class="drop-shadow">
+<div class="glass"></div>
+  </div>
       <div class="circle circle1"></div>
 
-      <div class="container">
+      <div class="container" style="margin-top:-5em; position:absolute; z-index:2;">
         <div style="width:80%; display: inline-block;">
-        <ion-icon :name="person" color="primary"></ion-icon>
+        <ion-icon name="person" color="primary"></ion-icon>
         <ion-item
           lines="none"
           class="ion-text-center ion-margin itemDesign"
           color="light"
         >
           <ion-input
-            placeholder="شماره همراه"
+            placeholder="نام کامل"
             type="text"
             clearInput="true"
-            v-model="user"
+            v-model="name"
           ></ion-input>
         </ion-item>
 
@@ -89,9 +92,60 @@
             color="light"
           >
             <ion-input
+            v-model="url"
+              placeholder="آدرس سایت"
+              type="text"
+              clearInput="true"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+          size="6"
+            lines="none"
+            class="ion-text-center ion-margin itemDesign"
+            color="light"
+          >
+            <ion-input
+            v-model="phoneNumber"
+              placeholder="شماره همراه"
+              type="text"
+              clearInput="true"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+          size="6"
+            lines="none"
+            class="ion-text-center ion-margin itemDesign"
+            color="light"
+          >
+            <ion-input
+            v-model="email"
+              placeholder="ایمیل"
+              type="text"
+              clearInput="true"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+          size="6"
+            lines="none"
+            class="ion-text-center ion-margin itemDesign"
+            color="light"
+          >
+            <ion-input
             v-model="pass"
-            v-on:keyup.enter="onEnter()"
               placeholder="رمز عبور"
+              type="password"
+              clearInput="true"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+          size="6"
+            lines="none"
+            class="ion-text-center ion-margin itemDesign"
+            color="light"
+          >
+            <ion-input
+            v-model="repass"
+              placeholder="تکرار رمز عبور"
               type="password"
               clearInput="true"
             ></ion-input>
@@ -103,18 +157,16 @@
       <div class="circle circle2"></div>
 
       <div class="align ion-text-center">
-        <ion-button @click="Login()" expand="block" shape="round" style="color:var(--brand-tertiary); --background:var(--brand-quaternary)"
-          >ورود</ion-button
+        <ion-button @click="submit()" expand="block" shape="round" style="color:var(--brand-tertiary); --background:var(--brand-quaternary)"
+          >ثبت نام</ion-button
         >
-        <ion-text style="color:var(--brand-tertiary)" @click="forget()"><p>فراموشی رمز عبور</p></ion-text>
-        <!-- <ion-text style="color:var(--brand-tertiary)" @click="forget()"><p>Register</p></ion-text> -->
         
         <ion-row>
           <ion-col size="3"
-            ><ion-icon :name="ellipse" color="light"></ion-icon
+            ><ion-icon name="ellipse" color="light"></ion-icon
           ></ion-col>
           <ion-col size="3"
-            ><ion-icon :name="logoGoogle" color="light"></ion-icon
+            ><ion-icon name="logoGoogle" color="light"></ion-icon
           ></ion-col>
         </ion-row>
       </div>
@@ -144,7 +196,6 @@ export default defineComponent({
   name: "Login",
   components: {
     IonPage,
-    IonText,
     IonRow,
     IonContent,
     IonInput,
@@ -155,28 +206,36 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const user = ref('')
+    const name = ref('')
+    const url = ref('')
+    const phoneNumber = ref('')
+    const email = ref('')
     const pass = ref('')
-    const { mutate: auth,onDone,onError } = useMutation(gql`
-      mutation auth ($user: String!,$pass:String!) {
-        tokenAuth (phoneNumber: $user , password:$pass) {
-          token
-          user{
-            id
-          }
-        }
-      }
-    `)
+    const repass = ref('')
+    const { mutate: createShop,onDone,onError } = useMutation(gql`
+      mutation createShop($name:String!,$url:String!,$data:CreateUserInputType!){
+  createShop(name:$name,url:$url,userData:$data)
+     {
+    status
+  }
+}
+    `,{variables:{
+        name:name.value,
+        url:url.value,
+        data:{phoneNumber:phoneNumber.value,password:pass.value,emailAddress:email.value}
+    },
+    })
 
- onDone(result=>{
+ onDone(()=>{
 
-        console.log(result.data.tokenAuth)
-        localStorage.token = result.data.tokenAuth.token;
-        localStorage.id = result.data.tokenAuth.user.id;
-        router.push({ path: '/tabs' })       
+        // console.log(result.data.tokenAuth)
+        // localStorage.token = result.data.tokenAuth.token;
+        // localStorage.id = result.data.tokenAuth.user.id;
+        router.push({ path: '/login' })       
     });
 
-  onError(()=>{
+  onError(err=>{
+      console.log(err)
     alert("Enter a valid Creditentials.");
   })
     
@@ -185,23 +244,24 @@ export default defineComponent({
       square,
       triangle,
       person,
-      user,
+      name,
+      url,
+      phoneNumber,
+      email,
       pass,
-      auth,
+      createShop,
       router,
       logoGoogle
     };
   },
   methods:{
-    Login(){
-      // console.log(this.user,this.pass)
-      this.auth({user:this.user,pass:this.pass});
-      this.user = "";
+    submit(){
+    //   console.log(this.name,this.pass)
+      this.createShop({name:this.name,url:this.url,data:{password:this.pass,emailAddress:this.email,phoneNumber:this.phoneNumber,}});
       this.pass = "";
     },
     onEnter(){
-     this.auth({user:this.user,pass:this.pass});
-     this.user = "";
+
      this.pass = "";
     },
     forget(){
@@ -291,6 +351,104 @@ ion-row {
   margin-left: -8vw;
   ion-icon {
     font-size: 2rem;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css?family=Rajdhani:300&display=swap');
+
+$blur: 20px;
+$shadow-opacity: 0.30;
+$image: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg';
+
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url($image);
+  background-size: cover;
+  background-position: center;
+font-family: 'Rajdhani', sans-serif;
+
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.glass {
+  height: 100%;
+  width: 100%;
+   background-image: url($image);
+  background-size: cover;
+  background-position: center;
+  clip-path: inset(10em);
+  filter: blur($blur);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drop-shadow {
+  height: 100%;
+  width: 100%;
+filter:  drop-shadow(0px 20px 10px rgba(0, 0, 0, $shadow-opacity));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   &:before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 10em;
+     height: calc(100% - 20em);
+    width: calc(100% - 20em);
+     border-top: 2px solid rgba(225,225,225, 0.2);
+    border-left: 1px solid rgba(225,225,225, 0.1);
+     border-right: 1px solid rgba(225,225,225, 0.3);
+     z-index: 2;
+   //  filter: blur(1px);
+  }
+    
+  
+  > span {
+    position: absolute;
+    z-index: 5;
+    color: white;
+    font-size: 4em;
+    letter-spacing: 0.75em;
+    padding-left: 0.375em;
+  }
+}
+
+@media (max-width: 980px) {
+  .glass {
+     clip-path: inset(5em);
+  }
+  .drop-shadow {
+    &:before {
+      top: 5em;
+      width: calc(100% - 10em);
+    }
+    > span {
+      font-size: 4em;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  
+  .drop-shadow {
+    > span {
+      font-size: 2em;
+    }
   }
 }
 </style>

@@ -8,15 +8,25 @@ import ForgetPass from '../views/ForgetPass.vue'
 import Verification from '../views/Verification.vue'
 import Register from '../views/Register.vue'
 import Home from '../views/Home.vue'
+import affiRegister from '../views/affiRegister.vue'
+import shopRegister from '../views/shopRegister.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/home'
   },
   {
     path: '/home',
     component: Home,
+  },
+  {
+    path: '/affiRegister',
+    component: affiRegister,
+  },
+  {
+    path: '/shopRegister',
+    component: shopRegister,
   },
   {
     path: '/login',
