@@ -1,19 +1,35 @@
 <template>
   <ion-list>
+    
     <ion-item v-for="(item,index) in data" :key="index">
+      <!-- <ion-col v-if="item.node.destination.id==id" > -->
       <ion-icon slot="start" :icon="person"></ion-icon>
       <ion-label>
-        <h2>{{item.name}}</h2>
-        <p>{{item.date}}</p>
+        <h2  v-if="item.node.destination.id!=id" >برداشت</h2>
+        <h2  v-if="item.node.destination.id==id" >واریز</h2>
+        <p>{{item.node.transactionDate}}</p>
       </ion-label>
       <ion-text slot="end">
-        <b>R {{item.cost}}</b>
+        <b>ریال {{item.node.amount.toLocaleString()}}</b>
       </ion-text>
+      <!-- </ion-col> -->
+      <!-- <ion-col v-else> -->
+        <!-- <ion-icon slot="start" :icon="person"></ion-icon>
+      <ion-label>
+        <h2>{{item.node.destination.user.id}}</h2>
+        <p>{{item.node.transactionDate}}</p>
+      </ion-label>
+      <ion-text slot="end">
+        <b>ریال {{item.node.amount.toLocaleString()}}</b>
+      </ion-text> -->
+      <!-- </ion-col> -->
     </ion-item>
+    
   </ion-list>
 </template>
 
 <script>
+
 import { IonList, IonItem, IonLabel, IonText, IonIcon } from "@ionic/vue";
 import { person } from "ionicons/icons";
 export default {
@@ -23,7 +39,10 @@ export default {
 			type: Array,
 			required: true,
 			default: () => []
-		}
+		},
+    id:{
+      type:Number
+    }
   },
   components: { IonList, IonItem, IonLabel, IonText, IonIcon },
   setup() {

@@ -36,14 +36,14 @@
         <ion-col size="6">
           <ion-card>
             <ion-card-header class="ion-text-center">
-              13 Online Shops
+             12 : فروشگاه های آنلاین 
             </ion-card-header>
           </ion-card>
         </ion-col>
         <ion-col size="6">
           <ion-card>
             <ion-card-header class="ion-text-center">
-              89 Products
+             ۸۹ : تعداد محصولات
             </ion-card-header>
           </ion-card>
         </ion-col>

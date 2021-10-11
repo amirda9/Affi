@@ -60,12 +60,15 @@ export default defineComponent( {
         shopRate
         name
         shopPic
+        productsCount
       }
     }
   }
 }
 
-    `
+    `,() => ({
+  fetchPolicy: 'no-cache',
+})
 )
 
     const res = useResult(result, null, data => data.allShop.edges)

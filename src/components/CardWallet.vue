@@ -4,7 +4,7 @@
 			<ion-grid class="card" >
 				<ion-row>
 					<ion-col class="ion-text-center expDate">
-						امیر نایینی
+						Amir Naeeni
 					</ion-col>
 					<!-- <ion-col class="card-icon">
 						<ion-icon name="card" />
@@ -12,7 +12,7 @@
 				</ion-row>
 				<ion-row>
 					<ion-col class="ion-text-center card-number">
-						{{data.bankAccountNumber}}
+						{{data.bankAccountNumber.slice(0,4)}} {{data.bankAccountNumber.slice(4,8)}} {{data.bankAccountNumber.slice(8,12)}} {{data.bankAccountNumber.slice(12,16)}}
 						<!-- {{num}} -->
 					</ion-col>
 				</ion-row>
@@ -22,7 +22,7 @@
 						{{data.amount.toLocaleString()}} ریال
 					</ion-col>
                     <ion-col class="ion-text-right expDate">
-						02/05 
+						{{data.bankName}}
 					</ion-col>
 				</ion-row>
 			</ion-grid>

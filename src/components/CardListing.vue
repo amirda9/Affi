@@ -27,7 +27,7 @@
 				<ion-col>
 					<div class="label">تعداد محصولات</div>
 					<div class="value">
-						89
+						{{item.node.productsCount}}
 						<!-- <span class="unit">
 							months
 						</span> -->

@@ -6,11 +6,8 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <!-- <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title style="text-align:center; color:white;" size="large">کیف پول</ion-title>
-        </ion-toolbar>
-      </ion-header> -->
+      <div v-if="loading">Loading</div>
+      <div v-if="result">
       <ion-row class="ion-padding-top ion-padding-horizontal">
         <ion-col>
           <CardWallet :data="res" />
@@ -22,14 +19,14 @@
         </ion-col>
       </ion-row>
 
-      <RecentList :data="recentList"/>
+      <RecentList :data="recentList" :id="res.id"/>
   
   
   <!-- <ion-fab horizontal="start" vertical="bottom">
       <ion-fab-button>Button</ion-fab-button>
     </ion-fab> -->
       <!-- <ExploreContainer name="Tab 2 page" /> -->
-      
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -43,50 +40,59 @@ import RecentList from '@/components/RecentList.vue';
 import Bar from '@/components/Bar.vue';
 import { useQuery, useResult } from '@vue/apollo-composable';
 import gql from "graphql-tag";
+import { defineComponent, ref } from 'vue-demi';
 
-export default  {
+export default  defineComponent({
   name: 'Tab2',
   components: {CardWallet,QuickActions,IonHeader, IonToolbar, IonTitle, IonContent, IonPage , IonRow,IonCol,RecentList },
   setup(){
+    // eslint-disable-next-line prefer-const
+    let name=+ localStorage.id;
 const { result,loading, error,variables } = useQuery(gql`
     query wallet($id:Int!){
   wallet(userId:$id){
+    id
     amount
     bankName
     bankAccountNumber
+    transactions{
+      edges{
+        node{
+          amount
+          transactionDate
+          destination {
+            id
+            user{
+            	shop{
+                name
+              }
+              aff{
+                fullName
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
     `,{
-      id:1
+      id:name
     }
 )
 
     const res = useResult(result, null, data => data.wallet)
+    const recentList = useResult(result, null, data => data.wallet.transactions.edges)
 
     return{
       res,
-      result
-    }
-  },
-  data(){
-    return{
-      recentList: [
-        {
-          name: "Themna Makwa",
-          cost: "19.30",
-          date: "12 Aug 2020, 03:23 am",
-        },
-        {
-          name: "Tami Muthambi",
-          cost: "6.09",
-          date: "10 Aug 2020, 13:40 pm",
-        },
-  ]
+      result,
+      recentList
     }
   },
   
-}
+})
 </script>
 
 

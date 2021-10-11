@@ -56,12 +56,15 @@ import {
 import { arrowBack } from "ionicons/icons";
 import ProductList from "@/components/ProductList.vue";
 import { useRouter } from "vue-router";
+import { useRoute } from 'vue-router'
 import gql from "graphql-tag";
 import { useQuery, useResult } from "@vue/apollo-composable";
 
 export default defineComponent({
   name: "Shop",
   setup() {
+    const route = useRoute()
+console.log(route.params.id)
     const { result, variables } = useQuery(
       gql`
         query shop($id: Int!) {
@@ -78,6 +81,8 @@ export default defineComponent({
                   averageRating
                   price
                   stockQuantity
+                  shortDescription
+                  permalink
                   images{
                     src
                   }
@@ -88,8 +93,10 @@ export default defineComponent({
         }
       `,
       {
-        id: 1,
-      }
+        id: +route.params.id,
+      },() => ({
+  fetchPolicy: 'no-cache',
+})
     );
 
     const name = useResult(result, null, (data) => data.shop.name);

@@ -1,60 +1,6 @@
 <template>
   <ion-content class="ion-padding">
-    <ion-grid>
-        <ion-row>
-            <img src="https://dkstatics-public.digikala.com/digikala-products/113542037.jpg?x-oss-process=image/resize,h_1600/quality,q_80">
-        </ion-row>
-      <ion-row>
-        <ion-col class="ion-text-center">
-          <h1><span>T</span>{{data.price.toLocaleString()}}</h1>
-        </ion-col>
-        <!-- <ion-col class="quantity">
-          <ion-buttons>
-            <ion-row>
-                <ion-col>
-                <span class="q-count">{{ data.stockQuantity }}</span>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                در انبار
-                </ion-col>
-            </ion-row>
-          </ion-buttons>
-        </ion-col> -->
-      </ion-row>
-      <!-- <ion-row>
-        <ion-col>
-          <div class="size-label">Size</div>
-          <div class="size-row">
-            <span 
-              v-for="(item, index) in sizes" 
-              :key="index"
-              :class="selectedSize === index ? 'selected' : null"
-              @click="selectedSizeFn(index)"
-            >
-              {{ item }}
-            </span>
-          </div>
-        </ion-col>
-      </ion-row> -->
-      <ion-row>
-        <ion-col class="ion-text-center">
-          <h2 class="item-name">{{data.name}}</h2>
-          <p class="description" :innerHTML=data.shortDescription >
-            <!-- {{Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.}} -->
-          </p>
-        </ion-col>
-      </ion-row>
-      <ion-row >
-        <ion-col class="ion-text-center">
-        <ion-button class="close-btn" @click="closeForm()">
-          <ion-icon :icon="close"></ion-icon>
-        </ion-button>
-        <ion-button @click="copy(data.permalink)">Copy Link</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+   
   </ion-content>
 </template>
 
@@ -73,7 +19,7 @@ import {
 import { heart, add, close, remove } from "ionicons/icons"
 
 export default {
-  name: 'ModalOne',
+  name: 'CodeModal',
   props: {
     data: {
       type: Array
@@ -92,6 +38,7 @@ export default {
     IonGrid,
     IonRow,
     IonCol,
+    IonButtons
   },
   data() {
     return {
@@ -109,8 +56,8 @@ export default {
     }
   },
   methods: {
-    async copy(e){
-        navigator.clipboard.writeText(e);
+    async copy(){
+        navigator.clipboard.writeText("Welcome to affi");
         const toast = await toastController
         .create({
           message: 'Link Copied!',
