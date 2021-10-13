@@ -156,7 +156,9 @@
 
       <div class="circle circle2"></div>
 
-      <div class="align ion-text-center">
+      <ion-row class="align ion-justify-content-center" >
+  <ion-col size="6" class="ion-text-center">
+      <div class=" ion-text-center">
         <ion-button @click="submit()" expand="block" shape="round" style="color:var(--brand-tertiary); --background:var(--brand-quaternary)"
           >ثبت نام</ion-button
         >
@@ -170,6 +172,8 @@
           ></ion-col>
         </ion-row>
       </div>
+  </ion-col>
+      </ion-row>
     </ion-content>
   </ion-page>
 </template>
@@ -336,12 +340,12 @@ ion-icon {
   color: white;
 }
 
+
 .align {
   position: absolute;
-  width: 65%;
+  width: 100%;
   margin: auto;
-  bottom: 8vh;
-  left: 16vw;
+  bottom:20px;
   ion-text {
     font-size: small;
   }

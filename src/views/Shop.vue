@@ -1,6 +1,5 @@
 <template>
   <ion-page scrollable>
-    <ion-content>
     <ion-header style="padding:0; margin-bottom:0;">
       <ion-toolbar>
         <ion-title style="color:white; text-align:center;">{{
@@ -18,6 +17,7 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+    <ion-content :fullscreen="true">
     <ion-grid>
       <ion-row id="list">
         <ion-col

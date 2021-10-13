@@ -10,7 +10,7 @@
               <ion-col class="ion-text-center">
                 <img
                   src="../../public/assets/2.png"
-                  style="padding-bottom:5em; max-height:50vh;"
+                  style="padding-bottom:10vh; max-height:50vh;"
                 />
               </ion-col>
             </ion-row>
@@ -46,7 +46,7 @@
               <div class="bg"></div>
               <div class="details">
                 <!-- <h1 class="ion-padding-top">AFFI</h1> -->
-                <ion-row class="ion-padding" style="padding-top:10em;">
+                <ion-row class="ion-padding" style="padding-top:15vh;">
                   <ion-col class="ion-text-center">
                     <ion-button
                       @click="shop"
@@ -93,12 +93,15 @@
               </div>
 
               <div class="illustration">
+                <ion-col class="ion-text-center">
                 <div class="inner ">
                   <img
                     src="../../public/assets/2.png"
-                    style="padding-top:5vh"
+                    style="padding-top:5vh; max-height:30vh"
+
                   />
                 </div>
+                </ion-col>
               </div>
             </div>
 
@@ -581,7 +584,7 @@ body {
   width: 70vw;
   background: transparent;
   position: absolute;
-  top: 150px;
+  top: 20vh;
   left: 0;
   right: 0;
   margin: auto;

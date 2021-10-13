@@ -16,11 +16,16 @@
           <ion-input
             placeholder="شماره همراه"
             type="text"
-            clearInput="true"
             v-model="user"
           ></ion-input>
         </ion-item>
-
+  <!-- <ion-item class="ion-text-center ion-margin itemDesign">
+    <ion-input placeholder="شماره همراه"
+            type="text"
+            clearInput="true"
+            v-model="user">
+    </ion-input>
+  </ion-item> -->
           <ion-item
           size="6"
             lines="none"
@@ -32,7 +37,7 @@
             v-on:keyup.enter="onEnter()"
               placeholder="رمز عبور"
               type="password"
-              clearInput="true"
+              
             ></ion-input>
           </ion-item>
         </div>
@@ -40,9 +45,10 @@
       
 
       <div class="circle circle2"></div>
-
-      <div class="align ion-text-center">
-        <ion-button @click="Login()" expand="block" shape="round" style="color:var(--brand-tertiary); --background:var(--brand-quaternary)"
+<ion-row class="align ion-justify-content-center" >
+  <ion-col size="6" class="ion-text-center">
+      <div class=" ion-text-center">
+        <ion-button  @click="Login()" expand="block" shape="round" style=" color:var(--brand-tertiary); --background:var(--brand-quaternary)"
           >ورود</ion-button
         >
         <ion-text style="color:var(--brand-tertiary)" @click="forget()"><p>فراموشی رمز عبور</p></ion-text>
@@ -57,6 +63,8 @@
           ></ion-col>
         </ion-row>
       </div>
+  </ion-col>
+</ion-row>
     </ion-content>
   </ion-page>
 </template>
@@ -154,6 +162,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+// ion-input{
+//     ::placeholder{
+//       margin-right: ;
+//     }
+// }
 ::-webkit-scrollbar,
 *::-webkit-scrollbar {
   display: none;
@@ -167,16 +180,16 @@ export default defineComponent({
 ion-content {
   --background: linear-gradient(
     45deg,
-    var(--brand-tertiary) 50%,
-    var(--brand-secondary) 100%
+    var(--brand-tertiary) 30%,
+    var(--brand-secondary) 70%
   );
   overflow: hidden;
   --overflow: hidden;
 }
 
 .circle {
-  height: 600px;
-  width: 600px;
+  height: 100vh;
+  width: 100vh;
   // background: linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);
   background: var(--brand-primary);
   box-shadow: 0px 1px 10px rgba(98, 140, 255, 0.5);
@@ -195,7 +208,7 @@ ion-content {
 
 .container {
   position: absolute;
-  top: 6vh;
+  top: 2vh;
   // left: 9vw;
   // margin-left: auto;
   // margin-right: auto;
@@ -217,19 +230,18 @@ ion-icon {
 
 .align {
   position: absolute;
-  width: 65%;
+  width: 100%;
   margin: auto;
-  bottom: 8vh;
-  left: 16vw;
+  bottom:20px;
   ion-text {
     font-size: small;
   }
 }
 
-ion-row {
-  margin-left: -8vw;
-  ion-icon {
-    font-size: 2rem;
-  }
-}
+// ion-row {
+//   margin-left: -8vw;
+//   ion-icon {
+//     font-size: 2rem;
+//   }
+// }
 </style>
