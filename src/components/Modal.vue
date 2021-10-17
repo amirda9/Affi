@@ -2,7 +2,25 @@
   <ion-content class="ion-padding">
     <ion-grid>
         <ion-row>
-            <img src="https://dkstatics-public.digikala.com/digikala-products/113542037.jpg?x-oss-process=image/resize,h_1600/quality,q_80">
+           <!-- <v-carousel cycle
+    height="400"
+    hide-delimiter-background
+    show-arrows-on-hover>
+    <v-carousel-item
+      v-for="(item) in data.images.edges"
+      :key="item"
+    >
+    
+    </v-carousel-item>
+  </v-carousel> -->
+  <ion-slides pager="true" :options="slideOpts">
+    <ion-slide  v-for="(item) in data.images.edges"
+      :key="item">
+      <img style="height:50vh; width:100%;" :src=item.node.src>
+      <!-- <h1>Slide 1</h1> -->
+    </ion-slide>
+  </ion-slides>
+            <!-- <img style="height:50vh; width:100%;" src="https://dkstatics-public.digikala.com/digikala-products/113542037.jpg?x-oss-process=image/resize,h_1600/quality,q_80"> -->
         </ion-row>
       <ion-row>
         <ion-col class="ion-text-center">
@@ -101,7 +119,12 @@ export default {
     }
   },
   setup() {
+    const slideOpts = {
+      initialSlide: 1,
+      speed: 400
+    };
     return {
+      slideOpts,
       heart,
       add,
       close,

@@ -12,7 +12,7 @@
 					</span>
 				</div>
 				<!-- <img v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopImage[0].src" /> -->
-<img src="https://dkstatics-public.digikala.com/digikala-products/113542037.jpg?x-oss-process=image/resize,h_1600/quality,q_80">
+<img style="height: 40vh; width:100%" :src=item.node.images.edges[0].node.src>
 			</ion-row>
 			<ion-row class="second-row">
 				<ion-col>

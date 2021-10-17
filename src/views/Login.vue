@@ -54,14 +54,14 @@
         <ion-text style="color:var(--brand-tertiary)" @click="forget()"><p>فراموشی رمز عبور</p></ion-text>
         <!-- <ion-text style="color:var(--brand-tertiary)" @click="forget()"><p>Register</p></ion-text> -->
         
-        <ion-row>
+        <!-- <ion-row>
           <ion-col size="3"
             ><ion-icon :name="ellipse" color="light"></ion-icon
           ></ion-col>
           <ion-col size="3"
             ><ion-icon :name="logoGoogle" color="light"></ion-icon
           ></ion-col>
-        </ion-row>
+        </ion-row> -->
       </div>
   </ion-col>
 </ion-row>
@@ -231,8 +231,7 @@ ion-icon {
 .align {
   position: absolute;
   width: 100%;
-  margin: auto;
-  bottom:20px;
+  bottom: 50px;
   ion-text {
     font-size: small;
   }

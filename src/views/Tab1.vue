@@ -6,6 +6,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
+      
       <!-- <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title style="color:white; text-align:center;" size="large">فروشگاه‌ها</ion-title>
@@ -58,7 +59,9 @@ export default defineComponent( {
         id
         url
         shopRate
-        name
+        user{
+          name
+        }
         shopPic
         productsCount
       }

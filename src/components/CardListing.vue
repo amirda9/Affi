@@ -4,13 +4,13 @@
             <ion-card>
 			<ion-row class="first-row">
 				<div class="company">
-					{{ item.node.name }}
+					{{ item.node.user.name }}
 					<br />
 					<span class="model">
 						{{ item.node.url }}
 					</span>
 				</div>
-				<img v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopPic" />
+				<img style="height: 30vh; width:100%" v-bind:src="'http://37.152.180.217:8000/mediafiles/' + item.node.shopPic" />
 				<!-- {{item.node.shopImage.src}} -->
 
 			</ion-row>

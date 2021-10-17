@@ -36,15 +36,21 @@
         <ion-col size="6">
           <ion-card>
             <ion-card-header class="ion-text-center">
-             12 : فروشگاه های آنلاین 
+              فروشگاه های آنلاین 
             </ion-card-header>
+            <ion-card-subtitle class="ion-text-center">
+              12
+            </ion-card-subtitle>
           </ion-card>
         </ion-col>
         <ion-col size="6">
           <ion-card>
             <ion-card-header class="ion-text-center">
-             ۸۹ : تعداد محصولات
+              تعداد محصولات
             </ion-card-header>
+            <ion-card-subtitle class="ion-text-center">
+              89
+            </ion-card-subtitle>
           </ion-card>
         </ion-col>
       </ion-row>

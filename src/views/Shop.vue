@@ -69,7 +69,9 @@ console.log(route.params.id)
       gql`
         query shop($id: Int!) {
           shop(id: $id) {
-            name
+            user{
+              name
+            }
             id
             shopRate
             shopPic
@@ -84,7 +86,11 @@ console.log(route.params.id)
                   shortDescription
                   permalink
                   images{
-                    src
+                    edges{
+                      node{
+                        src
+                      }
+                    }
                   }
                 }
               }
@@ -99,7 +105,7 @@ console.log(route.params.id)
 })
     );
 
-    const name = useResult(result, null, (data) => data.shop.name);
+    const name = useResult(result, null, (data) => data.shop.user.name);
     const products = useResult(result, null, (data) => data.shop.products.edges);
 
     return {

@@ -53,7 +53,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 // HTTP connection to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
-  uri: 'http://37.152.180.217:8000/graphql/',
+  uri: 'https://affiapi.hadeth.ir/graphql/',
 })
 
 // Cache implementation

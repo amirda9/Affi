@@ -56,10 +56,11 @@ import {IonPage,IonTabBar,IonTabButton,IonIcon,IonLabel,IonTabs,IonRouterOutlet,
   IonFab,
   IonFabButton} from '@ionic/vue';
 import { ellipse, square, triangle,wallet,cart,person,add } from 'ionicons/icons';
+import { defineComponent } from 'vue-demi';
 
 
 
-export default {
+export default defineComponent({
   name: 'Tabs',
   components: {IonPage,IonTabBar,IonTabButton,IonIcon,IonLabel,IonTabs,IonRouterOutlet,IonFab,
   IonFabButton },
@@ -73,7 +74,7 @@ export default {
       add
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
