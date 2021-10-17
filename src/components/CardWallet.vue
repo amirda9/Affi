@@ -4,7 +4,7 @@
 			<ion-grid class="card" >
 				<ion-row>
 					<ion-col class="ion-text-center expDate">
-						Amir Naeeni
+						{{data.user.name}}
 					</ion-col>
 					<!-- <ion-col class="card-icon">
 						<ion-icon name="card" />

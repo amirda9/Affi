@@ -18,22 +18,22 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-    <ion-grid>
-      <ion-row id="list">
-        <ion-col
-          v-for="(item, index) in btns"
-          :key="index"
-          @click="select(index)"
-          :class="active === index ? 'active' : null"
-        >
-          {{ item }}
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <!-- <product-lis -->
-        <ProductList :data="products" />
-      </ion-row>
-    </ion-grid>
+      <ion-grid>
+        <ion-row id="list">
+          <ion-col
+            v-for="(item, index) in categories"
+            :key="index"
+            @click="select(index)"
+            :class="active === index ? 'active' : null"
+          >
+            {{ item.node.name }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <!-- <product-lis -->
+          <ProductList :data="products" />
+        </ion-row>
+      </ion-grid>
     </ion-content>
   </ion-page>
 </template>
@@ -51,30 +51,38 @@ import {
   IonButtons,
   IonHeader,
   IonButton,
-  IonContent
+  IonContent,
 } from "@ionic/vue";
 import { arrowBack } from "ionicons/icons";
 import ProductList from "@/components/ProductList.vue";
 import { useRouter } from "vue-router";
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router";
 import gql from "graphql-tag";
 import { useQuery, useResult } from "@vue/apollo-composable";
 
 export default defineComponent({
   name: "Shop",
   setup() {
-    const route = useRoute()
-console.log(route.params.id)
+    const route = useRoute();
+    console.log(route.params.id);
     const { result, variables } = useQuery(
       gql`
         query shop($id: Int!) {
           shop(id: $id) {
-            user{
+            user {
               name
             }
             id
             shopRate
             shopPic
+            categorySet {
+              edges {
+                node {
+                  name
+                  baseId
+                }
+              }
+            }
             products {
               edges {
                 node {
@@ -85,9 +93,9 @@ console.log(route.params.id)
                   stockQuantity
                   shortDescription
                   permalink
-                  images{
-                    edges{
-                      node{
+                  images {
+                    edges {
+                      node {
                         src
                       }
                     }
@@ -100,19 +108,26 @@ console.log(route.params.id)
       `,
       {
         id: +route.params.id,
-      },() => ({
-  fetchPolicy: 'no-cache',
-})
+      },
+      () => ({
+        fetchPolicy: "no-cache",
+      })
     );
 
     const name = useResult(result, null, (data) => data.shop.user.name);
-    const products = useResult(result, null, (data) => data.shop.products.edges);
+    const categories = useResult(result, null, (data) => data.shop.categorySet.edges);
+    const products = useResult(
+      result,
+      null,
+      (data) => data.shop.products.edges
+    );
 
     return {
       result,
       arrowBack,
       name,
-      products
+      products,
+      categories
     };
   },
 
@@ -128,7 +143,7 @@ console.log(route.params.id)
     IonButtons,
     IonHeader,
     IonButton,
-    IonContent
+    IonContent,
   },
   data() {
     return {

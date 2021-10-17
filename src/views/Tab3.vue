@@ -6,12 +6,17 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-icon name="exitOutline" ></ion-icon>
-      <ion-row class="ion-padding-top ion-justify-content-center" style="align-items:center">
-        <ion-col class="ion-text-right" size="3">
-        </ion-col>
-        <ion-col class="ion-text-center" size="6"> 
-          <img src="../../public/assets/2.png" style="height:10em; border-radius:50%;">
+      <ion-icon name="exitOutline"></ion-icon>
+      <ion-row
+        class="ion-padding-top ion-justify-content-center"
+        style="align-items:center"
+      >
+        <ion-col class="ion-text-right" size="3"> </ion-col>
+        <ion-col class="ion-text-center" size="6">
+          <img
+            src="../../public/assets/2.png"
+            style="height:10em; border-radius:50%;"
+          />
         </ion-col>
         <ion-col class="ion-text-left" size="3">
           <ion-row>
@@ -26,17 +31,17 @@
           </ion-row>
         </ion-col>
       </ion-row>
-      
+
       <ion-row>
-        <ion-col class="ion-text-center"> 
-          <h2 class="ion-no-padding">Amir Naeeni</h2>
+        <ion-col class="ion-text-center">
+          <h2 class="ion-no-padding">{{user.name}}</h2>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="6">
           <ion-card>
             <ion-card-header class="ion-text-center">
-              فروشگاه های آنلاین 
+              فروشگاه های آنلاین
             </ion-card-header>
             <ion-card-subtitle class="ion-text-center">
               12
@@ -76,24 +81,56 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonButtons,IonButton,IonRow,IonCol,IonIcon,IonCard,IonCardHeader
+  IonButtons,
+  IonButton,
+  IonRow,
+  IonCol,
+  IonIcon,
+  IonCard,
+  IonCardHeader,
 } from "@ionic/vue";
 import { computed, defineComponent, onMounted, ref } from "vue-demi";
-import { pencilOutline,exitOutline } from 'ionicons/icons';
+import { pencilOutline, exitOutline } from "ionicons/icons";
 import { DoughnutChart, useDoughnutChart } from "vue-chart-3";
 import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
+import gql from "graphql-tag";
+import { useQuery, useResult } from "@vue/apollo-composable";
 
 Chart.register(...registerables);
 
 export default defineComponent({
   name: "Tab3",
-  components: { DoughnutChart,IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,IonRow,IonCol,IonIcon,IonCard,IonCardHeader },
+  components: {
+    DoughnutChart,
+    IonPage,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonCard,
+    IonCardHeader,
+  },
   setup() {
+    // eslint-disable-next-line prefer-const
+    let name = +localStorage.id;
+    const { result, loading, error, variables } = useQuery(
+      gql`
+        query user {
+          user(id: 1) {
+            name
+          }
+        }
+      `,
+      {
+        id: name,
+      }
+    );
+
+    const user = useResult(result, null, (data) => data.user);
     const router = useRouter();
     const dataValues = ref([30, 40, 60, 70, 5]);
     const toggleLegend = ref(true);
@@ -142,17 +179,18 @@ export default defineComponent({
       options,
       doughnutChartRef,
       doughnutChartProps,
+      user
     };
   },
-  methods:{
-    logout(){
+  methods: {
+    logout() {
       // console.log(1);
-      localStorage.clear()
+      localStorage.clear();
       this.$router.push({
-	path: '/login',
-});
-    }
-  }
+        path: "/login",
+      });
+    },
+  },
 });
 </script>
 
