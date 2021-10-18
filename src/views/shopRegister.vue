@@ -64,87 +64,90 @@
 </ion-content> -->
 
     <ion-content>
-        <div class="drop-shadow">
-<div class="glass"></div>
-  </div>
+      <div class="drop-shadow">
+        <div class="glass"></div>
+      </div>
       <div class="circle circle1"></div>
 
-      <div class="container" style="margin-top:-5em; position:absolute; z-index:2;">
+      <div
+        class="container"
+        style="margin-top:-5em; position:absolute; z-index:2;"
+      >
         <div style="width:80%; display: inline-block;">
-        <ion-icon name="person" color="primary"></ion-icon>
-        <ion-item
-          lines="none"
-          class="ion-text-center ion-margin itemDesign"
-          color="light"
-        >
-          <ion-input
-            placeholder="نام کامل"
-            type="text"
-            clearInput="true"
-            v-model="name"
-          ></ion-input>
-        </ion-item>
-
+          <ion-icon name="person" color="primary"></ion-icon>
           <ion-item
-          size="6"
             lines="none"
             class="ion-text-center ion-margin itemDesign"
             color="light"
           >
             <ion-input
-            v-model="url"
+              placeholder="نام کامل"
+              type="text"
+              clearInput="true"
+              v-model="name"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item
+            size="6"
+            lines="none"
+            class="ion-text-center ion-margin itemDesign"
+            color="light"
+          >
+            <ion-input
+              v-model="url"
               placeholder="آدرس سایت"
               type="text"
               clearInput="true"
             ></ion-input>
           </ion-item>
           <ion-item
-          size="6"
+            size="6"
             lines="none"
             class="ion-text-center ion-margin itemDesign"
             color="light"
           >
             <ion-input
-            v-model="phoneNumber"
+              v-model="phoneNumber"
               placeholder="شماره همراه"
               type="text"
               clearInput="true"
             ></ion-input>
           </ion-item>
           <ion-item
-          size="6"
+            size="6"
             lines="none"
             class="ion-text-center ion-margin itemDesign"
             color="light"
           >
             <ion-input
-            v-model="email"
+              v-model="email"
               placeholder="ایمیل"
               type="text"
               clearInput="true"
             ></ion-input>
           </ion-item>
           <ion-item
-          size="6"
+            size="6"
             lines="none"
             class="ion-text-center ion-margin itemDesign"
             color="light"
           >
             <ion-input
-            v-model="pass"
+              v-model="pass"
               placeholder="رمز عبور"
               type="password"
               clearInput="true"
             ></ion-input>
           </ion-item>
           <ion-item
-          size="6"
+            size="6"
             lines="none"
             class="ion-text-center ion-margin itemDesign"
             color="light"
           >
             <ion-input
-            v-model="repass"
+              v-model="repass"
               placeholder="تکرار رمز عبور"
               type="password"
               clearInput="true"
@@ -152,27 +155,30 @@
           </ion-item>
         </div>
       </div>
-      
 
       <div class="circle circle2"></div>
 
-      <ion-row class="align ion-justify-content-center" >
-  <ion-col size="6" class="ion-text-center">
-      <div class=" ion-text-center">
-        <ion-button @click="submit()" expand="block" shape="round" style="color:var(--brand-tertiary); --background:var(--brand-quaternary)"
-          >ثبت نام</ion-button
-        >
-        
-        <ion-row>
-          <ion-col size="3"
-            ><ion-icon name="ellipse" color="light"></ion-icon
-          ></ion-col>
-          <ion-col size="3"
-            ><ion-icon name="logoGoogle" color="light"></ion-icon
-          ></ion-col>
-        </ion-row>
-      </div>
-  </ion-col>
+      <ion-row class="align ion-justify-content-center">
+        <ion-col size="6" class="ion-text-center">
+          <div class=" ion-text-center">
+            <ion-button
+              @click="submit()"
+              expand="block"
+              shape="round"
+              style="color:var(--brand-tertiary); --background:var(--brand-quaternary)"
+              >ثبت نام</ion-button
+            >
+
+            <ion-row>
+              <ion-col size="3"
+                ><ion-icon name="ellipse" color="light"></ion-icon
+              ></ion-col>
+              <ion-col size="3"
+                ><ion-icon name="logoGoogle" color="light"></ion-icon
+              ></ion-col>
+            </ion-row>
+          </div>
+        </ion-col>
       </ion-row>
     </ion-content>
   </ion-page>
@@ -190,11 +196,11 @@ import {
   IonCol,
   IonIcon,
 } from "@ionic/vue";
-import { ellipse, square, triangle, person,logoGoogle } from "ionicons/icons";
-import { defineComponent,ref } from "vue";
-import { useMutation } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
-import { useRouter } from 'vue-router';
+import { ellipse, square, triangle, person, logoGoogle } from "ionicons/icons";
+import { defineComponent, ref } from "vue";
+import { useMutation } from "@vue/apollo-composable";
+import gql from "graphql-tag";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Login",
@@ -210,39 +216,48 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const name = ref('')
-    const url = ref('')
-    const phoneNumber = ref('')
-    const email = ref('')
-    const pass = ref('')
-    const repass = ref('')
-    const { mutate: createShop,onDone,onError } = useMutation(gql`
-      mutation createShop($name:String!,$url:String!,$data:CreateUserInputType!){
-  createShop(name:$name,url:$url,userData:$data)
-     {
-    status
-  }
-}
-    `,{variables:{
-        name:name.value,
-        url:url.value,
-        data:{phoneNumber:phoneNumber.value,password:pass.value,emailAddress:email.value}
-    },
-    })
+    const name = ref("");
+    const url = ref("");
+    const phoneNumber = ref("");
+    const email = ref("");
+    const pass = ref("");
+    const repass = ref("");
+    const { mutate: createShop, onDone, onError } = useMutation(
+      gql`
+        mutation createShop(
+          $url: String!,
+          $data: CreateUserInputType!
+        ) {
+          createShop(url: $url, userData: $data) {
+            status
+          }
+        }
+      `,
+      {
+        variables: {
+          url: url.value,
+          data: {
+            phoneNumber: phoneNumber.value,
+            password: pass.value,
+            emailAddress: email.value,
+            name: name.value,
+          },
+        },
+      }
+    );
 
- onDone(()=>{
-
-        // console.log(result.data.tokenAuth)
-        // localStorage.token = result.data.tokenAuth.token;
-        // localStorage.id = result.data.tokenAuth.user.id;
-        router.push({ path: '/login' })       
+    onDone(() => {
+      // console.log(result.data.tokenAuth)
+      // localStorage.token = result.data.tokenAuth.token;
+      // localStorage.id = result.data.tokenAuth.user.id;
+      router.push({ path: "/login" });
     });
 
-  onError(err=>{
-      console.log(err)
-    alert("Enter a valid Creditentials.");
-  })
-    
+    onError((err) => {
+      console.log(err);
+      alert("Enter a valid Creditentials.");
+    });
+
     return {
       ellipse,
       square,
@@ -255,26 +270,33 @@ export default defineComponent({
       pass,
       createShop,
       router,
-      logoGoogle
+      logoGoogle,
     };
   },
-  methods:{
-    submit(){
-    //   console.log(this.name,this.pass)
-      this.createShop({name:this.name,url:this.url,data:{password:this.pass,emailAddress:this.email,phoneNumber:this.phoneNumber,}});
+  methods: {
+    submit() {
+      //   console.log(this.name,this.pass)
+      this.createShop({
+        url: this.url,
+        data: {
+          password: this.pass,
+          emailAddress: this.email,
+          phoneNumber: this.phoneNumber,
+          name: this.name,
+        },
+      });
       this.pass = "";
     },
-    onEnter(){
-
-     this.pass = "";
+    onEnter() {
+      this.pass = "";
     },
-    forget(){
+    forget() {
       // console.log("amir")
       this.$router.push({
-	path: '/forgetPass',
-});
-    }
-  }
+        path: "/forgetPass",
+      });
+    },
+  },
 });
 </script>
 
@@ -340,12 +362,11 @@ ion-icon {
   color: white;
 }
 
-
 .align {
   position: absolute;
   width: 100%;
   margin: auto;
-  bottom:20px;
+  bottom: 20px;
   ion-text {
     font-size: small;
   }
@@ -358,39 +379,39 @@ ion-row {
   }
 }
 
-@import url('https://fonts.googleapis.com/css?family=Rajdhani:300&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Rajdhani:300&display=swap");
 
 $blur: 20px;
-$shadow-opacity: 0.30;
-$image: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg';
+$shadow-opacity: 0.3;
+$image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/jess-harding-lqT6NAmTaiY-unsplash.jpg";
 
-
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-
 body {
-   display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   background-image: url($image);
   background-size: cover;
   background-position: center;
-font-family: 'Rajdhani', sans-serif;
-
+  font-family: "Rajdhani", sans-serif;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
 .glass {
   height: 100%;
   width: 100%;
-   background-image: url($image);
+  background-image: url($image);
   background-size: cover;
   background-position: center;
   clip-path: inset(10em);
@@ -403,25 +424,24 @@ font-family: 'Rajdhani', sans-serif;
 .drop-shadow {
   height: 100%;
   width: 100%;
-filter:  drop-shadow(0px 20px 10px rgba(0, 0, 0, $shadow-opacity));
+  filter: drop-shadow(0px 20px 10px rgba(0, 0, 0, $shadow-opacity));
   display: flex;
   justify-content: center;
   align-items: center;
-   &:before {
+  &:before {
     display: block;
     content: "";
     position: absolute;
     top: 10em;
-     height: calc(100% - 20em);
+    height: calc(100% - 20em);
     width: calc(100% - 20em);
-     border-top: 2px solid rgba(225,225,225, 0.2);
-    border-left: 1px solid rgba(225,225,225, 0.1);
-     border-right: 1px solid rgba(225,225,225, 0.3);
-     z-index: 2;
-   //  filter: blur(1px);
+    border-top: 2px solid rgba(225, 225, 225, 0.2);
+    border-left: 1px solid rgba(225, 225, 225, 0.1);
+    border-right: 1px solid rgba(225, 225, 225, 0.3);
+    z-index: 2;
+    //  filter: blur(1px);
   }
-    
-  
+
   > span {
     position: absolute;
     z-index: 5;
@@ -434,7 +454,7 @@ filter:  drop-shadow(0px 20px 10px rgba(0, 0, 0, $shadow-opacity));
 
 @media (max-width: 980px) {
   .glass {
-     clip-path: inset(5em);
+    clip-path: inset(5em);
   }
   .drop-shadow {
     &:before {
@@ -448,7 +468,6 @@ filter:  drop-shadow(0px 20px 10px rgba(0, 0, 0, $shadow-opacity));
 }
 
 @media (max-width: 640px) {
-  
   .drop-shadow {
     > span {
       font-size: 2em;

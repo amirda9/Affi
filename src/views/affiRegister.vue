@@ -224,24 +224,20 @@ export default defineComponent({
     const repass = ref("");
     const { mutate: createAff, onDone, onError } = useMutation(
       gql`
-        mutation createAff(
-          $name: String!
-          $national: String!
-          $data: CreateUserInputType!
-        ) {
-          createAff(fullName: $name, nationalCode: $national, userData: $data) {
+        mutation createAff($national: String!, $data: CreateUserInputType!) {
+          createAff(nationalCode: $national, userData: $data) {
             status
           }
         }
       `,
       {
         variables: {
-          name: name.value,
           national: nationalCode.value,
           data: {
             phoneNumber: phoneNumber.value,
             password: pass.value,
             emailAddress: email.value,
+            name: name.value,
           },
         },
       }
@@ -278,12 +274,12 @@ export default defineComponent({
     submit() {
       // console.log(this.user,this.pass)
       this.createAff({
-        name: this.name,
         national: this.nationalCode,
         data: {
           phoneNumber: this.phoneNumber,
           password: this.pass,
           emailAddress: this.email,
+          name: this.name,
         },
       });
       this.name = "";

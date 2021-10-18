@@ -19,7 +19,7 @@
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-grid>
-        <ion-row id="list">
+        <!-- <ion-row id="list">
           <ion-col
             v-for="(item, index) in categories"
             :key="index"
@@ -28,7 +28,22 @@
           >
             {{ item.node.name }}
           </ion-col>
-        </ion-row>
+        </ion-row> -->
+        {{res}}
+        <div v-if="loading">Loading</div>
+        <div v-if="categories">
+          <ion-slides :options="slideOpts">
+            <ion-slide
+              v-for="(item, index) in categories.edges"
+              :key="index"
+              @click="select(index)"
+            >
+              <ion-button style="width:30vw">
+                {{ item.node.name }}
+              </ion-button>
+            </ion-slide>
+          </ion-slides>
+        </div>
         <ion-row>
           <!-- <product-lis -->
           <ProductList :data="products" />
@@ -55,6 +70,7 @@ import {
 } from "@ionic/vue";
 import { arrowBack } from "ionicons/icons";
 import ProductList from "@/components/ProductList.vue";
+import Cats from "@/components/Cats.vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import gql from "graphql-tag";
@@ -63,9 +79,13 @@ import { useQuery, useResult } from "@vue/apollo-composable";
 export default defineComponent({
   name: "Shop",
   setup() {
+    const slideOpts = {
+      initialSlide: -1,
+      slidesPerView: 3,
+    };
     const route = useRoute();
     console.log(route.params.id);
-    const { result, variables } = useQuery(
+    const { result, variables, loading } = useQuery(
       gql`
         query shop($id: Int!) {
           shop(id: $id) {
@@ -105,6 +125,7 @@ export default defineComponent({
             }
           }
         }
+
       `,
       {
         id: +route.params.id,
@@ -114,8 +135,68 @@ export default defineComponent({
       })
     );
 
+
+const { res } = useQuery(
+      gql`
+        query Prods($id:Int!) {
+  shop(id: $id) {
+    user {
+      name
+    }
+    id
+    shopRate
+    shopPic
+    categorySet {
+      edges {
+        node {
+          name
+          baseId
+        }
+      }
+    }
+    products(category:"کالکشن زمستان") {
+      edges {
+        node {
+          id
+          name
+          categories {
+            id
+            name
+            baseId
+          }
+          averageRating
+          price
+          stockQuantity
+          shortDescription
+          permalink
+          images {
+            edges {
+              node {
+                src
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+      `,
+      {
+        id: +route.params.id,
+      },
+      () => ({
+        fetchPolicy: "no-cache",
+      })
+    );
+    
+
+    // console.log(res)
+
     const name = useResult(result, null, (data) => data.shop.user.name);
-    const categories = useResult(result, null, (data) => data.shop.categorySet.edges);
+    const categories = useResult(result, null, (data) => data.shop.categorySet);
     const products = useResult(
       result,
       null,
@@ -127,7 +208,10 @@ export default defineComponent({
       arrowBack,
       name,
       products,
-      categories
+      categories,
+      slideOpts,
+      loading,
+      res
     };
   },
 
@@ -135,7 +219,6 @@ export default defineComponent({
     ProductList,
     IonGrid,
     IonRow,
-    IonCol,
     IonPage,
     IonToolbar,
     IonTitle,
@@ -158,7 +241,7 @@ export default defineComponent({
       this.$router.go(-1);
     },
     select(index) {
-      // this.active = index;
+      this.active = index;
     },
   },
 });
@@ -182,7 +265,8 @@ ion-col {
   // }
 }
 .active {
-  border: 1px #2f2f2f solid;
+  // border: 1px #2f2f2f solid;
+  color: red;
 }
 .btn-icon {
   margin: -3px 5px;

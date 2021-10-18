@@ -20,7 +20,7 @@
       </ion-tab-bar>
     </ion-tabs>
   </ion-page> -->
-   <ion-page>
+  <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
@@ -28,7 +28,7 @@
           <ion-icon :icon="cart" />
           <ion-label>فروشگاه‌ها</ion-label>
         </ion-tab-button>
-          
+
         <ion-tab-button tab="tab2" href="/tabs/tab2">
           <ion-icon :icon="wallet" />
           <ion-label class="ion-no-padding">کیف پول</ion-label>
@@ -39,8 +39,10 @@
           <ion-label>پروفایل</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="" href="">
-        </ion-tab-button>
+        <ion-tab-button tab="" href=""> </ion-tab-button>
+        <div class="tubelight">
+		<div class="light-ray"></div>
+	</div>
       </ion-tab-bar>
       <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
         <ion-fab-button>
@@ -52,32 +54,78 @@
 </template>
 
 <script lang="ts">
-import {IonPage,IonTabBar,IonTabButton,IonIcon,IonLabel,IonTabs,IonRouterOutlet,
+import {
+  IonPage,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonLabel,
+  IonTabs,
+  IonRouterOutlet,
   IonFab,
-  IonFabButton} from '@ionic/vue';
-import { ellipse, square, triangle,wallet,cart,person,add } from 'ionicons/icons';
-import { defineComponent } from 'vue-demi';
-
-
+  IonFabButton,
+} from "@ionic/vue";
+import {
+  ellipse,
+  square,
+  triangle,
+  wallet,
+  cart,
+  person,
+  add,
+} from "ionicons/icons";
+import { defineComponent } from "vue-demi";
 
 export default defineComponent({
-  name: 'Tabs',
-  components: {IonPage,IonTabBar,IonTabButton,IonIcon,IonLabel,IonTabs,IonRouterOutlet,IonFab,
-  IonFabButton },
+  name: "Tabs",
+  components: {
+    IonPage,
+    IonTabBar,
+    IonTabButton,
+    IonIcon,
+    IonLabel,
+    IonTabs,
+    IonRouterOutlet,
+    IonFab,
+    IonFabButton,
+  },
   setup() {
     return {
-      ellipse, 
-      square, 
+      ellipse,
+      square,
       triangle,
-      wallet,cart,
+      wallet,
+      cart,
       person,
-      add
-    }
-  }
-})
+      add,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
+	.tubelight {
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		transform: translateX(-50%);
+		width: 45px;
+		height: 5px;
+		border-radius: 5px;
+		background: #ffffff;
+		transition: left 400ms ease;
+		z-index: 10;
+		.light-ray {
+			position: absolute;
+			left: -30%;
+			top: 5px;
+			width: 160%;
+			height: 80px;
+			clip-path: polygon(5% 100%, 25% 0px, 75% 0px, 95% 100%);
+			background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) -50%, rgba(255, 255, 255, 0) 90%);
+			pointer-events: none;
+		}
+	}
 ion-tab-bar {
   // --background:var(--brand-tertiary);
   height: 60px;
@@ -90,11 +138,11 @@ ion-tab-bar {
     font-size: 14px;
   }
 }
-ion-tab-button{
+ion-tab-button {
   --color-selected: var(--brand-quaternary);
 }
 ion-fab-button {
- --background: var(--brand-primary);
+  --background: var(--brand-primary);
   bottom: 55px;
   margin-right: 15px;
   position: relative;

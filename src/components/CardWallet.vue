@@ -10,9 +10,15 @@
 						<ion-icon name="card" />
 					</ion-col> -->
 				</ion-row>
-				<ion-row>
+				<ion-row v-if="data.bankAccountNumber!=null">
 					<ion-col class="ion-text-center card-number">
 						{{data.bankAccountNumber.slice(0,4)}} {{data.bankAccountNumber.slice(4,8)}} {{data.bankAccountNumber.slice(8,12)}} {{data.bankAccountNumber.slice(12,16)}}
+						<!-- {{num}} -->
+					</ion-col>
+				</ion-row>
+				<ion-row v-if="data.bankAccountNumber==null">
+					<ion-col class="ion-text-center card-number">
+						**** **** **** ****
 						<!-- {{num}} -->
 					</ion-col>
 				</ion-row>

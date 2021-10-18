@@ -9,7 +9,7 @@
             <ion-row class="ion-padding">
               <ion-col class="ion-text-center">
                 <img
-                  src="../../public/assets/2.png"
+                  :src="require('../../public/assets/2.png')"
                   style="padding-bottom:10vh; max-height:50vh;"
                 />
               </ion-col>
@@ -56,7 +56,7 @@
                     </ion-button>
                   </ion-col>
                 </ion-row>
-                <ion-row class="ion-padding">
+                <ion-row style="padding:1em">
                   <ion-col class="ion-text-center">
                     <ion-button
                       @click="affi"
@@ -66,7 +66,7 @@
                     </ion-button>
                   </ion-col>
                 </ion-row>
-                <ion-row class="ion-padding">
+                <ion-row style="padding:1em">
                   <ion-col class="ion-text-center">
                     <ion-button
                       @click="login()"
@@ -96,7 +96,7 @@
                 <ion-col class="ion-text-center">
                 <div class="inner ">
                   <img
-                    src="../../public/assets/2.png"
+                    :src="require('../../public/assets/2.png')"
                     style="padding-top:5vh; max-height:30vh"
 
                   />

@@ -2,17 +2,9 @@
   <ion-content class="ion-padding">
     <ion-grid>
         <ion-row>
-           <!-- <v-carousel cycle
-    height="400"
-    hide-delimiter-background
-    show-arrows-on-hover>
-    <v-carousel-item
-      v-for="(item) in data.images.edges"
-      :key="item"
-    >
-    
-    </v-carousel-item>
-  </v-carousel> -->
+           
+
+           
   <ion-slides pager="true" :options="slideOpts">
     <ion-slide  v-for="(item) in data.images.edges"
       :key="item">
@@ -26,36 +18,8 @@
         <ion-col class="ion-text-center">
           <h1><span>T</span>{{data.price.toLocaleString()}}</h1>
         </ion-col>
-        <!-- <ion-col class="quantity">
-          <ion-buttons>
-            <ion-row>
-                <ion-col>
-                <span class="q-count">{{ data.stockQuantity }}</span>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                در انبار
-                </ion-col>
-            </ion-row>
-          </ion-buttons>
-        </ion-col> -->
+        
       </ion-row>
-      <!-- <ion-row>
-        <ion-col>
-          <div class="size-label">Size</div>
-          <div class="size-row">
-            <span 
-              v-for="(item, index) in sizes" 
-              :key="index"
-              :class="selectedSize === index ? 'selected' : null"
-              @click="selectedSizeFn(index)"
-            >
-              {{ item }}
-            </span>
-          </div>
-        </ion-col>
-      </ion-row> -->
       <ion-row>
         <ion-col class="ion-text-center">
           <h2 class="item-name">{{data.name}}</h2>

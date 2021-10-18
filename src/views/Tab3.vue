@@ -14,7 +14,7 @@
         <ion-col class="ion-text-right" size="3"> </ion-col>
         <ion-col class="ion-text-center" size="6">
           <img
-            src="../../public/assets/2.png"
+            :src="require('../../public/assets/2.png')"
             style="height:10em; border-radius:50%;"
           />
         </ion-col>
@@ -31,13 +31,16 @@
           </ion-row>
         </ion-col>
       </ion-row>
-
+<div v-if="loading">Loading</div>
+<div v-if="user">
       <ion-row>
         <ion-col class="ion-text-center">
           <h2 class="ion-no-padding">{{user.name}}</h2>
         </ion-col>
       </ion-row>
+</div>
       <ion-row>
+      
         <ion-col size="6">
           <ion-card>
             <ion-card-header class="ion-text-center">
@@ -119,8 +122,8 @@ export default defineComponent({
     let name = +localStorage.id;
     const { result, loading, error, variables } = useQuery(
       gql`
-        query user {
-          user(id: 1) {
+        query user ($id:Int!){
+          user(id: $id) {
             name
           }
         }
@@ -131,6 +134,7 @@ export default defineComponent({
     );
 
     const user = useResult(result, null, (data) => data.user);
+    console.log(user.value)
     const router = useRouter();
     const dataValues = ref([30, 40, 60, 70, 5]);
     const toggleLegend = ref(true);

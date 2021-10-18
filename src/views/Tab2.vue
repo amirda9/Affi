@@ -26,6 +26,10 @@
     </ion-fab> -->
         <!-- <ExploreContainer name="Tab 2 page" /> -->
       </div>
+
+
+
+      
     </ion-content>
   </ion-page>
 </template>
@@ -104,7 +108,10 @@ export default defineComponent({
       `,
       {
         id: name,
-      }
+      },
+      () => ({
+        fetchPolicy: "no-cache",
+      })
     );
 
     const res = useResult(result, null, (data) => data.wallet);
