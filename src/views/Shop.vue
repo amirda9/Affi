@@ -29,25 +29,33 @@
             {{ item.node.name }}
           </ion-col>
         </ion-row> -->
-        {{res}}
-        <div v-if="loading">Loading</div>
+        <div v-if="loading ">Loading</div>
+        <!-- {{result}} -->
         <div v-if="categories">
           <ion-slides :options="slideOpts">
             <ion-slide
               v-for="(item, index) in categories.edges"
               :key="index"
-              @click="select(index)"
+              @click="select(item.node.name)"
             >
-              <ion-button style="width:30vw">
+              <ion-button expand="block" shape="round" style="width:30vw; color:var(--brand-tertiary); --background:var(--brand-quaternary)">
                 {{ item.node.name }}
               </ion-button>
             </ion-slide>
           </ion-slides>
-        </div>
+        
+        <ion-row><ion-col>
+          <ion-button @click="filter()" expand="block" shape="round" style="color:white; --background:var(--brand-quaternary)"> 
+            <ion-icon :icon="filterOutline"></ion-icon> مرتب سازی بر اساس نرخ بازگشت
+          </ion-button>
+          </ion-col>
+        </ion-row>
+
         <ion-row>
-          <!-- <product-lis -->
           <ProductList :data="products" />
         </ion-row>
+
+        </div>
       </ion-grid>
     </ion-content>
   </ion-page>
@@ -67,8 +75,10 @@ import {
   IonHeader,
   IonButton,
   IonContent,
+  IonSlides,
+  IonSlide
 } from "@ionic/vue";
-import { arrowBack } from "ionicons/icons";
+import { arrowBack,filterOutline } from "ionicons/icons";
 import ProductList from "@/components/ProductList.vue";
 import Cats from "@/components/Cats.vue";
 import { useRouter } from "vue-router";
@@ -79,15 +89,16 @@ import { useQuery, useResult } from "@vue/apollo-composable";
 export default defineComponent({
   name: "Shop",
   setup() {
+    const cat = ref('')
+    const order = ref('')
     const slideOpts = {
       initialSlide: -1,
       slidesPerView: 3,
     };
     const route = useRoute();
-    console.log(route.params.id);
-    const { result, variables, loading } = useQuery(
+    const { result, variables, loading,refetch,onResult } = useQuery(
       gql`
-        query shop($id: Int!) {
+        query shop($id: Int!,$cat:String,$order:String) {
           shop(id: $id) {
             user {
               name
@@ -99,11 +110,12 @@ export default defineComponent({
               edges {
                 node {
                   name
+                  id
                   baseId
                 }
               }
             }
-            products {
+            products(category:$cat,orderBy:$order) {
               edges {
                 node {
                   id
@@ -129,80 +141,25 @@ export default defineComponent({
       `,
       {
         id: +route.params.id,
+        cat:route.query.cat,
+        order:order
       },
       () => ({
         fetchPolicy: "no-cache",
       })
     );
 
-
-const { res } = useQuery(
-      gql`
-        query Prods($id:Int!) {
-  shop(id: $id) {
-    user {
-      name
-    }
-    id
-    shopRate
-    shopPic
-    categorySet {
-      edges {
-        node {
-          name
-          baseId
-        }
-      }
-    }
-    products(category:"کالکشن زمستان") {
-      edges {
-        node {
-          id
-          name
-          categories {
-            id
-            name
-            baseId
-          }
-          averageRating
-          price
-          stockQuantity
-          shortDescription
-          permalink
-          images {
-            edges {
-              node {
-                src
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-
-      `,
-      {
-        id: +route.params.id,
-      },
-      () => ({
-        fetchPolicy: "no-cache",
-      })
-    );
-    
-
-    // console.log(res)
-
-    const name = useResult(result, null, (data) => data.shop.user.name);
+      const name = useResult(result, null, (data) => data.shop.user.name);
     const categories = useResult(result, null, (data) => data.shop.categorySet);
     const products = useResult(
       result,
       null,
       (data) => data.shop.products.edges
     );
-
+    onResult(res=>{
+    console.log(res)
+    })
+    
     return {
       result,
       arrowBack,
@@ -211,7 +168,8 @@ const { res } = useQuery(
       categories,
       slideOpts,
       loading,
-      res
+      refetch,
+      filterOutline
     };
   },
 
@@ -227,6 +185,8 @@ const { res } = useQuery(
     IonHeader,
     IonButton,
     IonContent,
+    IonSlides,
+    IonSlide
   },
   data() {
     return {
@@ -234,15 +194,20 @@ const { res } = useQuery(
       btns: ["Category 1 ", "Food", "Clothes"],
     };
   },
-
   methods: {
     back() {
       // console.log("1");
-      this.$router.go(-1);
+      this.$router.push("/tabs");
     },
     select(index) {
-      this.active = index;
+      console.log(index)
+      this.cat = index;
+      this.$router.push({ path: ('/shop/'+this.$route.params.id), query: { cat: this.cat}})
+      this.refetch({id:1,cat:this.cat,order:""});
     },
+    filter(){
+      this.refetch({id:1,cat:this.cat,order:"affiliateRate"});
+    }
   },
 });
 </script>
