@@ -1,39 +1,42 @@
 <template>
   <ion-content class="ion-padding">
     <ion-grid>
-        <ion-row>
-           
-
-           
-  <ion-slides pager="true" :options="slideOpts">
-    <ion-slide  v-for="(item) in data.images.edges"
-      :key="item">
-      <img style="height:50vh; width:100%;" :src=item.node.src>
-      <!-- <h1>Slide 1</h1> -->
-    </ion-slide>
-  </ion-slides>
-            <!-- <img style="height:50vh; width:100%;" src="https://dkstatics-public.digikala.com/digikala-products/113542037.jpg?x-oss-process=image/resize,h_1600/quality,q_80"> -->
-        </ion-row>
       <ion-row>
-        <ion-col class="ion-text-center">
-          <h1><span>T</span>{{data.price.toLocaleString()}}</h1>
-        </ion-col>
-        
+        <ion-slides pager="true" :options="slideOpts">
+          <ion-slide v-for="item in data.images.edges" :key="item">
+            <img style="height:50vh; width:100%;" :src="item.node.src" />
+            <!-- <h1>Slide 1</h1> -->
+          </ion-slide>
+        </ion-slides>
+        <!-- <img style="height:50vh; width:100%;" src="https://dkstatics-public.digikala.com/digikala-products/113542037.jpg?x-oss-process=image/resize,h_1600/quality,q_80"> -->
       </ion-row>
       <ion-row>
         <ion-col class="ion-text-center">
-          <h2 class="item-name">{{data.name}}</h2>
-          <p class="description" :innerHTML=data.shortDescription >
+          <h1><span>T</span>{{ data.price.toLocaleString() }}</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <h2 class="item-name">{{ data.name }}</h2>
+          <p class="description" :innerHTML="data.shortDescription">
             <!-- {{Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.}} -->
           </p>
         </ion-col>
       </ion-row>
-      <ion-row >
+      <ion-row>
         <ion-col class="ion-text-center">
-        <ion-button class="close-btn" @click="closeForm()">
-          <ion-icon :icon="close"></ion-icon>
-        </ion-button>
-        <ion-button @click="copy(data.permalink)">Copy Link</ion-button>
+          <ion-button class="close-btn" @click="closeForm()">
+            <ion-icon :icon="close"></ion-icon>
+          </ion-button>
+          <ion-button
+            @click="
+              linkReq({
+                user: +id,
+                prod: +data.id,
+              })
+            "
+            >Copy Link</ion-button
+          >
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -52,20 +55,22 @@ import {
   toastController,
 } from "@ionic/vue";
 
-import { heart, add, close, remove } from "ionicons/icons"
+import { heart, add, close, remove } from "ionicons/icons";
+import gql from "graphql-tag";
+import { useMutation } from "@vue/apollo-composable";
 
 export default {
-  name: 'ModalOne',
+  name: "ModalOne",
   props: {
     data: {
-      type: Array
+      type: Array,
     },
     context: {
-      type: Object
+      type: Object,
     },
     modalInstance: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   components: {
     IonIcon,
@@ -76,42 +81,77 @@ export default {
     IonCol,
   },
   data() {
+    
     return {
       quantity: 1,
       selectedSize: 0,
-      sizes: [5,6,7,8]
-    }
+      sizes: [5, 6, 7, 8],
+    };
   },
   setup() {
+    const id=localStorage.id;
+    const { mutate: linkReq, onDone, onError } = useMutation(gql`
+      mutation linkReq($user: Int!, $prod: Int!) {
+        requestAffiliationUrl(affUserId: $user, productId: $prod) {
+          status
+          error
+          affiliationUrl
+        }
+      }
+    `);
+
+    async function copy(e) {
+      navigator.clipboard.writeText(e);
+      const toast = await toastController.create({
+        message: "Link Copied!",
+        duration: "1000",
+        buttons: [
+          {
+            text: "Ok",
+            role: "cancel",
+            handler: () => {
+              console.log("Cancel clicked");
+            },
+          },
+        ],
+      });
+      await toast.present();
+    }
+
+    onDone((res) => {
+      copy(res.data.requestAffiliationUrl.affiliationUrl);
+      // console.log(res.data)
+    });
     const slideOpts = {
       initialSlide: 1,
-      speed: 400
+      speed: 400,
     };
     return {
       slideOpts,
       heart,
       add,
       close,
-      remove
-    }
+      remove,
+      linkReq,
+      id
+    };
   },
   methods: {
-    async copy(e){
-        navigator.clipboard.writeText(e);
-        const toast = await toastController
-        .create({
-          message: 'Link Copied!',
-          duration:"1000",
-          buttons: [
-            {
-              text: 'Ok',
-              role: 'cancel',
-              handler: () => {
-                console.log('Cancel clicked');
-              }
-            }
-          ]
-        })
+    async copy(e) {
+      navigator.clipboard.writeText(e);
+      const toast = await toastController.create({
+        message: "Link Copied!",
+        duration: "1000",
+        buttons: [
+          {
+            text: "Ok",
+            role: "cancel",
+            handler: () => {
+              console.log("Cancel clicked");
+            },
+          },
+        ],
+      });
       await toast.present();
     },
     quantityFn(count) {
@@ -123,9 +163,9 @@ export default {
     closeForm() {
       this.modalInstance.dismiss();
       this.context.$emit("toggleImageFn", false);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -145,8 +185,8 @@ h1 {
 }
 
 .item-name {
-  border-top: 1px solid var(--brand-primary); 
-  padding-top: 25px; 
+  border-top: 1px solid var(--brand-primary);
+  padding-top: 25px;
   color: #000;
 }
 
@@ -157,11 +197,11 @@ h1 {
 .size-row {
   margin-left: -5px;
   padding: 0;
-  
+
   span {
     background: #fff3b9;
-    border: 1px solid #f9ebab; 
-    border-radius: 5px; 
+    border: 1px solid #f9ebab;
+    border-radius: 5px;
     padding: 6px 14px;
     margin: 3px;
     color: var(--brand-primary);
@@ -171,7 +211,8 @@ h1 {
   }
 }
 
-.description, .size-label {
+.description,
+.size-label {
   font-size: 13px;
 }
 
@@ -187,18 +228,18 @@ ion-button {
 }
 
 ion-col.quantity {
-    text-align: right;
-    width: 50%;
-    margin: auto auto auto 100px;
-    .q-count {
-      background: #fff3b9;
-      padding: 0px 15px;
-      margin: -6px;
-    }
+  text-align: right;
+  width: 50%;
+  margin: auto auto auto 100px;
+  .q-count {
+    background: #fff3b9;
+    padding: 0px 15px;
+    margin: -6px;
+  }
 
-    .quantity-icon {
-      font-weight: 700;
-    }
+  .quantity-icon {
+    font-weight: 700;
+  }
 
   ion-buttons {
     ion-button {
