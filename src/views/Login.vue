@@ -116,7 +116,6 @@ export default defineComponent({
     `)
 
  onDone(result=>{
-
         console.log(result.data.tokenAuth)
         localStorage.token = result.data.tokenAuth.token;
         localStorage.id = result.data.tokenAuth.user.id;

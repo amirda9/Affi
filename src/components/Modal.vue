@@ -24,16 +24,18 @@
         </ion-col>
       </ion-row>
       <ion-row>
+        <ion-col>
+          <ion-input :value="link" style="background:#dbe1f1" ></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
         <ion-col class="ion-text-center">
           <ion-button class="close-btn" @click="closeForm()">
             <ion-icon :icon="close"></ion-icon>
           </ion-button>
           <ion-button
             @click="
-              linkReq({
-                user: +id,
-                prod: +data.id,
-              })
+              copy()
             "
             >Copy Link</ion-button
           >
@@ -58,8 +60,10 @@ import {
 import { heart, add, close, remove } from "ionicons/icons";
 import gql from "graphql-tag";
 import { useMutation } from "@vue/apollo-composable";
+import { defineComponent, onMounted, ref } from "vue-demi";
+import { data } from "jquery";
 
-export default {
+export default defineComponent({
   name: "ModalOne",
   props: {
     data: {
@@ -81,16 +85,16 @@ export default {
     IonCol,
   },
   data() {
-    
     return {
       quantity: 1,
       selectedSize: 0,
       sizes: [5, 6, 7, 8],
     };
   },
-  setup() {
-    const id=localStorage.id;
-    const { mutate: linkReq, onDone, onError } = useMutation(gql`
+  setup(props) {
+    const id = localStorage.id;
+    const link = localStorage.link;
+    const { mutate: linkReq, onDone, } = useMutation(gql`
       mutation linkReq($user: Int!, $prod: Int!) {
         requestAffiliationUrl(affUserId: $user, productId: $prod) {
           status
@@ -99,9 +103,16 @@ export default {
         }
       }
     `);
-
-    async function copy(e) {
-      navigator.clipboard.writeText(e);
+    onMounted(() => {
+      // runMutation();
+      // console.log(props.data);
+      linkReq({
+        user: +id,
+        prod: +props.data.id,
+      });
+    });
+    async function copy() {
+      navigator.clipboard.writeText(link);
       const toast = await toastController.create({
         message: "Link Copied!",
         duration: "1000",
@@ -118,10 +129,22 @@ export default {
       await toast.present();
     }
 
+    function func(e) {
+      console.log(e);
+    }
+
     onDone((res) => {
-      copy(res.data.requestAffiliationUrl.affiliationUrl);
-      // console.log(res.data)
+      // copy(res.data.requestAffiliationUrl.affiliationUrl);
+      // console.log(res.data.requestAffiliationUrl.affiliationUrl);
+      // func(res.data.requestAffiliationUrl.affiliationUrl);
+      // func(res.data.requestAffiliationUrl.affiliationUrl);
+      localStorage.link = res.data.requestAffiliationUrl.affiliationUrl;
     });
+
+
+    // const url = useMutation(linkReq,null,(data)=>{data.data})
+    // console.log(url)
+
     const slideOpts = {
       initialSlide: 1,
       speed: 400,
@@ -133,12 +156,16 @@ export default {
       close,
       remove,
       linkReq,
-      id
+      id,
+      link,
     };
   },
   methods: {
-    async copy(e) {
-      navigator.clipboard.writeText(e);
+    runMutation(e) {
+      console.log(e);
+    },
+    async copy() {
+      navigator.clipboard.writeText(this.link);
       const toast = await toastController.create({
         message: "Link Copied!",
         duration: "1000",
@@ -165,7 +192,7 @@ export default {
       this.context.$emit("toggleImageFn", false);
     },
   },
-};
+});
 </script>
 
 <style scoped lang="scss">

@@ -71,16 +71,16 @@
 
       <div
         class="container"
-        style="margin-top:-5em; position:absolute; z-index:2;"
+        style=" margin-top:-5em; position:absolute; z-index:2;"
       >
-        <div style="width:80%; display: inline-block;">
+        <div style=" width:80%; display: inline-block;">
           <ion-icon name="person" color="primary"></ion-icon>
           <ion-item
             lines="none"
             class="ion-text-center ion-margin itemDesign"
             color="light"
           >
-            <ion-input
+            <ion-input size-lg="6"
               placeholder="نام کامل"
               type="text"
               clearInput="true"
@@ -89,7 +89,6 @@
           </ion-item>
 
           <ion-item
-            size="6"
             lines="none"
             class="ion-text-center ion-margin itemDesign"
             color="light"
@@ -169,14 +168,6 @@
               >ثبت نام</ion-button
             >
 
-            <ion-row>
-              <ion-col size="3"
-                ><ion-icon name="ellipse" color="light"></ion-icon
-              ></ion-col>
-              <ion-col size="3"
-                ><ion-icon name="logoGoogle" color="light"></ion-icon
-              ></ion-col>
-            </ion-row>
           </div>
         </ion-col>
       </ion-row>
@@ -361,10 +352,11 @@ ion-icon {
 }
 
 .align {
-  position: absolute;
+  position:absolute;
+  z-index: 3;
   width: 100%;
   margin: auto;
-  bottom: 20px;
+  bottom: 2em;
   ion-text {
     font-size: small;
   }
