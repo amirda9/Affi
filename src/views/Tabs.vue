@@ -40,9 +40,9 @@
         </ion-tab-button>
 
         <ion-tab-button tab="" href=""> </ion-tab-button>
-        <div class="tubelight">
+        <!-- <div class="tubelight">
 		<div class="light-ray"></div>
-	</div>
+	</div> -->
       </ion-tab-bar>
       <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
         <ion-fab-button>
@@ -106,7 +106,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 	.tubelight {
 		position: absolute;
-		left: 0px;
+		left: 0;
+    right:0;
 		top: 0px;
 		transform: translateX(-50%);
 		width: 45px;

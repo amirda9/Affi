@@ -2,7 +2,7 @@
 	<div>
         <!-- {{data}} -->
 		<ion-grid  v-for="(item, index) in data" :key="index">
-            <ion-card>
+            <ion-card @click="openModal(item.node)">
 			<ion-row class="first-row">
 				<div class="company">
 					{{ item.node.name }}
@@ -16,12 +16,9 @@
 			</ion-row>
 			<ion-row class="second-row">
 				<ion-col>
-					<div class="label">امتیاز</div>
+					<div class="label">سود مشارکت</div>
 					<div class="value">
-						{{item.node.averageRating}}
-						<span class="unit">
-							/5
-						</span>
+						{{item.node.affiliateRate}}
 					</div>
 				</ion-col>
 				<ion-col>

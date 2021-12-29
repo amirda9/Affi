@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<ion-row class="ion-justify-content-center">
+			<ion-col size-lg="6">
 		<ion-grid @click="show(item.node.id)" v-for="(item, index) in data" :key="index">
             <ion-card>
 			<ion-row class="first-row">
@@ -33,15 +35,17 @@
 						</span> -->
 					</div>
 				</ion-col>
-				<ion-col>
+				<!-- <ion-col>
 					<div class="label">سود مشارکت</div>
 					<div class="value">
 						{{ item.node.shopRating }}
 					</div>
-				</ion-col>
+				</ion-col> -->
 			</ion-row>
             </ion-card>
 		</ion-grid>
+			</ion-col>
+		</ion-row>
 	</div>
 </template>
 

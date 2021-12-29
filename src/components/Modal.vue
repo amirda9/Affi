@@ -1,5 +1,5 @@
 <template>
-  <ion-content class="ion-padding">
+  <ion-content style="height:50vh" class="ion-padding">
     <ion-grid>
       <ion-row>
         <ion-slides pager="true" :options="slideOpts">
@@ -23,22 +23,22 @@
           </p>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <!-- <ion-row>
         <ion-col>
           <ion-input :value="link" style="background:#dbe1f1" ></ion-input>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row>
         <ion-col class="ion-text-center">
           <ion-button class="close-btn" @click="closeForm()">
             <ion-icon :icon="close"></ion-icon>
           </ion-button>
-          <ion-button
+          <!-- <ion-button
             @click="
               copy()
             "
             >Copy Link</ion-button
-          >
+          > -->
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -197,7 +197,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 ion-content {
-  --background: #fff;
+  --background: var(--brand-tertiary);
 }
 
 h1 {
@@ -238,9 +238,8 @@ h1 {
   }
 }
 
-.description,
-.size-label {
-  font-size: 13px;
+.description{
+text-align: right;
 }
 
 ion-button {

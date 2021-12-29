@@ -97,8 +97,7 @@
                 <div class="inner ">
                   <img
                     :src="require('../../public/assets/2.png')"
-                    style="padding-top:5vh; max-height:30vh"
-
+                    style="padding-top:5vh; max-height:30vh;"
                   />
                 </div>
                 </ion-col>
@@ -363,7 +362,6 @@ body {
         left: 0;
         bottom: 0;
         height: 54%;
-        transform: skewX(0deg);
       }
 
       &::before {
@@ -375,7 +373,6 @@ body {
         top: 0;
         background-color: inherit;
         pointer-events: none;
-        transform: skewX(10deg);
 
         @media only screen and (max-width: 650px) {
           width: 120%;
@@ -459,7 +456,6 @@ body {
       // background-color: $b1cl;
       background-image: url("../../public/assets/2.png");
       position: relative;
-      transform: skewX(-10deg);
 
       @media only screen and (max-width: 800px) {
         height: 20rem;

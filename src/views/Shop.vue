@@ -29,7 +29,7 @@
             {{ item.node.name }}
           </ion-col>
         </ion-row> -->
-        <div v-if="loading ">Loading</div>
+        <div v-if="loading">Loading</div>
         <!-- {{result}} -->
         <div v-if="categories">
           <ion-slides :options="slideOpts">
@@ -38,23 +38,43 @@
               :key="index"
               @click="select(item.node.name)"
             >
-              <ion-button expand="block" shape="round" style="width:30vw; color:var(--brand-tertiary); --background:var(--brand-quaternary)">
+              <ion-button
+                expand="block"
+                shape="round"
+                style="width:30vw; color:var(--brand-tertiary); --background:var(--brand-quaternary)"
+              >
                 {{ item.node.name }}
               </ion-button>
             </ion-slide>
           </ion-slides>
-        
-        <ion-row><ion-col>
-          <ion-button @click="filter()" expand="block" shape="round" style="color:white; --background:var(--brand-quaternary)"> 
-            <ion-icon :icon="filterOutline"></ion-icon> مرتب سازی بر اساس نرخ بازگشت
-          </ion-button>
-          </ion-col>
-        </ion-row>
 
-        <ion-row>
-          <ProductList :data="products" />
-        </ion-row>
+          <ion-row class="ion-justify-content-center ion-no-padding"
+            ><ion-col class="ion-no-padding">
+              <ion-button
+                @click="filter()"
+                expand="block"
+                shape="round"
+                style="color:white; --background:var(--brand-quaternary)"
+              >
+                <ion-icon :icon="filterOutline"></ion-icon> مرتب سازی بر اساس
+                نرخ بازگشت
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-button
+              @click="openToast()"
+              expand="block"
+              shape="round"
+              style="color:white; --background:var(--brand-quaternary)"
+            >
+              <ion-icon :icon="linkOutline"></ion-icon> لینک شخصی
+            </ion-button>
+          </ion-row>
 
+          <ion-row>
+            <ProductList :data="products" />
+          </ion-row>
         </div>
       </ion-grid>
     </ion-content>
@@ -76,15 +96,16 @@ import {
   IonButton,
   IonContent,
   IonSlides,
-  IonSlide
+  IonSlide,
+  toastController
 } from "@ionic/vue";
-import { arrowBack,filterOutline } from "ionicons/icons";
+import { arrowBack,filterOutline, linkOutline } from "ionicons/icons";
 import ProductList from "@/components/ProductList.vue";
 import Cats from "@/components/Cats.vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 import gql from "graphql-tag";
-import { useQuery, useResult } from "@vue/apollo-composable";
+import { useQuery, useResult,useMutation } from "@vue/apollo-composable";
 
 export default defineComponent({
   name: "Shop",
@@ -96,6 +117,51 @@ export default defineComponent({
       slidesPerView: 3,
     };
     const route = useRoute();
+
+    const { mutate: linkReq, onDone, } = useMutation(gql`
+      mutation linkReq($user: Int!, $shop: Int!) {
+        requestAffiliationUrl(affUserId: $user, shopId: $shop) {
+          status
+          error
+          affiliationUrl
+        }
+      }
+    `);
+
+async function copy(e){
+  navigator.clipboard.writeText(e);
+  const toast2 = await toastController.create({
+        message: "لینک کپی شد",
+        duration: "1000",
+      });
+      await toast2.present();
+}
+
+async function toast(e){
+  // console.log(e)
+const toast = await toastController
+        .create({
+          message: e,
+          duration: 20000,
+          buttons: [
+          {
+            text: "کپی",
+            role: "cancel",
+            handler: () => {
+              // console.log("Cancel clicked");
+              copy(e)
+            },
+          },
+        ],
+        })
+      return toast.present();
+    }
+
+    onDone((res)=>{
+      toast(res.data.requestAffiliationUrl.affiliationUrl)
+      console.log(res.data.requestAffiliationUrl.affiliationUrl)
+    })
+
     const { result, variables, loading,refetch,onResult } = useQuery(
       gql`
         query shop($id: Int!,$cat:String,$order:String) {
@@ -124,6 +190,7 @@ export default defineComponent({
                   price
                   stockQuantity
                   shortDescription
+                  affiliateRate
                   permalink
                   images {
                     edges {
@@ -156,10 +223,16 @@ export default defineComponent({
       null,
       (data) => data.shop.products.edges
     );
+    // console.log(products)
     onResult(res=>{
     console.log(res)
     })
-    
+
+onMounted(()=>{
+  console.log("mounted")
+  refetch({id: +route.params.id})
+})
+
     return {
       result,
       arrowBack,
@@ -169,7 +242,9 @@ export default defineComponent({
       slideOpts,
       loading,
       refetch,
-      filterOutline
+      filterOutline,
+      linkOutline,
+      linkReq
     };
   },
 
@@ -186,7 +261,8 @@ export default defineComponent({
     IonButton,
     IonContent,
     IonSlides,
-    IonSlide
+    IonSlide,
+    IonCol
   },
   data() {
     return {
@@ -197,17 +273,21 @@ export default defineComponent({
   methods: {
     back() {
       // console.log("1");
-      this.$router.push("/tabs");
+      // this.$router.push("/tabs");
+      this.$router.go(-1);
     },
     select(index) {
       console.log(index)
       this.cat = index;
-      this.$router.push({ path: ('/shop/'+this.$route.params.id), query: { cat: this.cat}})
-      this.refetch({id:1,cat:this.cat,order:""});
+      // this.$router.push({ path: ('/shop/'+this.$route.params.id), query: { cat: this.cat}})
+      this.refetch({id:+this.$route.params.id,cat:this.cat,order:""});
     },
     filter(){
-      this.refetch({id:1,cat:this.cat,order:"affiliateRate"});
-    }
+      this.refetch({id:+this.$route.params.id,cat:this.cat,order:"-affiliateRate"});
+    },
+      async openToast() {
+      this.linkReq({user:+localStorage.id,shop:+this.$route.params.id})
+    },
   },
 });
 </script>

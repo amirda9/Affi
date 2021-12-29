@@ -10,6 +10,7 @@ import Register from '../views/Register.vue'
 import Home from '../views/Home.vue'
 import affiRegister from '../views/affiRegister.vue'
 import shopRegister from '../views/shopRegister.vue'
+import shopEdit from '../views/ShopEdit.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -39,6 +40,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/register',
     component: Register,
+  },
+  {
+    path: '/shopEdit',
+    component: shopEdit,
   },
   {
     path: '/shop/:id',
